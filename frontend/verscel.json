@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/terms", "destination": "/terms.html" },
+    { "source": "/cookies", "destination": "/cookies.html" },
+    { "source": "/dpa", "destination": "/dpa.html" },
+    { "source": "/checkout", "destination": "/checkout.html" }
+  ]
+}
