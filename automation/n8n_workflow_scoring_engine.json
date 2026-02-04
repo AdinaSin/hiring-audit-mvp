@@ -1,0 +1,135 @@
+{
+  "name": "Hiring Audit - Scoring Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "audit/score",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-trigger",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Scoring thresholds\nconst GREEN_THRESHOLD = 2.3;\nconst RED_THRESHOLD = 1.5;\n\n// Critical questions that force RED if score = 0\nconst criticalQuestions = {\n  block1: ['b1_q3', 'b1_q4', 'b1_q7'],\n  block2: ['b2_q3', 'b2_q5', 'b2_q6'],\n  block3: ['b3_q2', 'b3_q3'],\n  block4: ['b4_q1', 'b4_q2', 'b4_q4'],\n  block5: ['b5_q1', 'b5_q2'],\n  block6: ['b6_q5', 'b6_q8'],\n  block7: ['b7_q1', 'b7_q2']\n};\n\n// Get input data\nconst inputData = $input.first().json;\nconst responses = inputData.responses || {};\n\n// Calculate scores per block\nconst blockScores = {};\nconst blockStatuses = {};\nconst blockDetails = {};\n\n// Group responses by block\nconst blockResponses = {};\nfor (const [questionId, score] of Object.entries(responses)) {\n  const blockMatch = questionId.match(/^b(\\d)_/);\n  if (blockMatch) {\n    const blockId = `block${blockMatch[1]}`;\n    if (!blockResponses[blockId]) {\n      blockResponses[blockId] = {};\n    }\n    blockResponses[blockId][questionId] = score;\n  }\n}\n\n// Calculate each block\nfor (const [blockId, blockData] of Object.entries(blockResponses)) {\n  const scores = Object.values(blockData).filter(v => v !== -1);\n  \n  if (scores.length === 0) {\n    blockStatuses[blockId] = 'gray';\n    blockScores[blockId] = null;\n    continue;\n  }\n  \n  const avg = scores.reduce((a, b) => a + b, 0) / scores.length;\n  blockScores[blockId] = Math.round(avg * 100) / 100;\n  \n  // Check for critical RED\n  const criticals = criticalQuestions[blockId] || [];\n  const hasCriticalRed = criticals.some(q => blockData[q] === 0);\n  \n  // Determine status\n  if (hasCriticalRed || avg < RED_THRESHOLD) {\n    blockStatuses[blockId] = 'red';\n  } else if (avg < GREEN_THRESHOLD) {\n    blockStatuses[blockId] = 'yellow';\n  } else {\n    blockStatuses[blockId] = 'green';\n  }\n  \n  // Store details\n  blockDetails[blockId] = {\n    average: avg,\n    questionCount: scores.length,\n    hasCriticalRed\n  };\n}\n\nreturn [{\n  json: {\n    audit_id: inputData.audit_id,\n    block_scores: blockScores,\n    block_statuses: blockStatuses,\n    block_details: blockDetails\n  }\n}];"
+      },
+      "id": "calculate-scores",
+      "name": "Calculate Block Scores",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst statuses = data.block_statuses;\nconst gateFailures = [];\nlet overallStatus = 'green';\n\n// Gate 0: Block 1 RED → Overall RED\nif (statuses.block1 === 'red') {\n  gateFailures.push({\n    gate: 'GATE_0',\n    block: 'block1',\n    name: 'Ownerless Hiring',\n    description: 'Executive ownership absent - overall system compromised'\n  });\n  overallStatus = 'red';\n}\n\n// Gate 1: Block 2 RED → Governance failure\nif (statuses.block2 === 'red') {\n  gateFailures.push({\n    gate: 'GATE_1',\n    block: 'block2',\n    name: 'Ungoverned TA',\n    description: 'TA Leadership governance broken - execution will fail'\n  });\n  overallStatus = 'red';\n}\n\n// Gate 1: Block 4 RED → Financial failure\nif (statuses.block4 === 'red') {\n  gateFailures.push({\n    gate: 'GATE_1',\n    block: 'block4',\n    name: 'Financial Opacity',\n    description: 'Financial governance broken - costs uncontrolled'\n  });\n  overallStatus = 'red';\n}\n\n// Execution blocks\nconst executionBlocks = ['block3', 'block5', 'block6'];\nfor (const blockId of executionBlocks) {\n  if (statuses[blockId] === 'red') {\n    const names = {\n      block3: 'Interview Bottleneck',\n      block5: 'Evaluation Collapse',\n      block6: 'Operational Fragility'\n    };\n    gateFailures.push({\n      gate: 'EXECUTION',\n      block: blockId,\n      name: names[blockId],\n      description: `${names[blockId]} detected - execution at risk`\n    });\n    overallStatus = 'red';\n  }\n}\n\n// If no RED, check for multiple YELLOWs\nif (overallStatus !== 'red') {\n  const yellowCount = Object.values(statuses).filter(s => s === 'yellow').length;\n  if (yellowCount >= 2) {\n    overallStatus = 'yellow';\n  }\n}\n\n// Data Trust Coefficient (Block 7 impact)\nlet dtc = 1.0;\nif (statuses.block7 === 'red') {\n  dtc = 0.7;\n} else if (statuses.block7 === 'yellow') {\n  dtc = 0.85;\n}\n\nreturn [{\n  json: {\n    ...data,\n    gate_failures: gateFailures,\n    overall_status: overallStatus,\n    data_trust_coefficient: dtc\n  }\n}];"
+      },
+      "id": "apply-gates",
+      "name": "Apply Gate Rules",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [690, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\nconst inputData = $node['Webhook Trigger'].json;\nconst responses = inputData.responses || {};\n\n// Cross-validation rules\nconst cvRules = [\n  {\n    id: 'CV-01',\n    name: 'Ownerless Hiring in Practice',\n    source: { block: 'block1', question: 'b1_q3', operator: '>=', value: 2 },\n    validator: { block: 'block6', question: 'b6_q2', operator: '<=', value: 1 },\n    severity: 'force-red',\n    diagnosis: 'Nominal ownership without mandate'\n  },\n  {\n    id: 'CV-02',\n    name: 'Planning Illusion',\n    source: { block: 'block1', question: 'b1_q1', operator: '>=', value: 2 },\n    validator: { block: 'block2', question: 'b2_q5', operator: '<=', value: 1 },\n    severity: 'hard',\n    diagnosis: 'Planning without capacity math'\n  },\n  {\n    id: 'CV-05',\n    name: 'SLA Theatre',\n    source: { block: 'block2', question: 'b2_q3', operator: '>=', value: 2 },\n    validator: { block: 'block6', question: 'b6_q5', operator: '<=', value: 1 },\n    severity: 'force-red',\n    diagnosis: 'SLA exists on paper only'\n  },\n  {\n    id: 'CV-06',\n    name: 'Capacity Denial',\n    source: { block: 'block2', question: 'b2_q5', operator: '>=', value: 2 },\n    validator: { block: 'block6', question: 'b6_q8', operator: '<=', value: 1 },\n    severity: 'hard',\n    diagnosis: 'Capacity claimed but not tracked'\n  },\n  {\n    id: 'CV-08',\n    name: 'Interview Bottleneck Masked',\n    source: { block: 'block3', question: 'b3_q2', operator: '>=', value: 2 },\n    validator: { block: 'block5', question: 'b5_q2', operator: '<=', value: 1 },\n    severity: 'force-red',\n    diagnosis: 'Delivery denial on interviews'\n  },\n  {\n    id: 'CV-17',\n    name: 'Evaluation Governance Broken',\n    source: { block: 'block5', question: 'b5_q2', operator: '>=', value: 2 },\n    validator: { block: 'block6', question: 'b6_q7', operator: '<=', value: 1 },\n    severity: 'force-red',\n    diagnosis: 'No teeth, no SLA'\n  }\n];\n\nconst contradictions = [];\nconst flags = [];\n\n// Check each rule\nfor (const rule of cvRules) {\n  const sourceValue = responses[rule.source.question];\n  const validatorValue = responses[rule.validator.question];\n  \n  if (sourceValue === undefined || validatorValue === undefined) continue;\n  \n  // Evaluate conditions\n  const sourceMatch = eval(`${sourceValue} ${rule.source.operator} ${rule.source.value}`);\n  const validatorMatch = eval(`${validatorValue} ${rule.validator.operator} ${rule.validator.value}`);\n  \n  if (sourceMatch && validatorMatch) {\n    contradictions.push({\n      rule_id: rule.id,\n      name: rule.name,\n      severity: rule.severity,\n      diagnosis: rule.diagnosis,\n      source_question: rule.source.question,\n      source_value: sourceValue,\n      validator_question: rule.validator.question,\n      validator_value: validatorValue\n    });\n    flags.push(rule.name);\n  }\n}\n\n// Update overall status if force-red contradictions found\nlet overallStatus = data.overall_status;\nconst forceRedContradictions = contradictions.filter(c => c.severity === 'force-red');\nif (forceRedContradictions.length > 0) {\n  overallStatus = 'red';\n}\n\n// Hard contradictions escalate yellow to red\nconst hardContradictions = contradictions.filter(c => c.severity === 'hard');\nif (hardContradictions.length >= 2 && overallStatus === 'yellow') {\n  overallStatus = 'red';\n}\n\nreturn [{\n  json: {\n    ...data,\n    contradictions,\n    flags,\n    overall_status: overallStatus,\n    contradiction_count: contradictions.length,\n    force_red_count: forceRedContradictions.length\n  }\n}];"
+      },
+      "id": "cross-validate",
+      "name": "Cross-Validation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [910, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = $input.first().json;\n\n// Base score from block statuses\nconst scoreMap = { green: 90, yellow: 60, red: 30, gray: 50 };\nconst blockStatuses = Object.values(data.block_statuses);\nconst blockScoreValues = blockStatuses.map(s => scoreMap[s] || 50);\n\nlet confidence = blockScoreValues.reduce((a, b) => a + b, 0) / blockScoreValues.length;\n\n// Deductions for issues\nconfidence -= (data.contradiction_count || 0) * 3;\nconfidence -= (data.gate_failures?.length || 0) * 5;\n\n// Apply Data Trust Coefficient\nconfidence *= data.data_trust_coefficient || 1.0;\n\n// Bounds\nconfidence = Math.max(0, Math.min(100, Math.round(confidence)));\n\n// Generate summary\nconst redBlocks = Object.entries(data.block_statuses)\n  .filter(([k, v]) => v === 'red')\n  .map(([k, v]) => k);\n\nconst yellowBlocks = Object.entries(data.block_statuses)\n  .filter(([k, v]) => v === 'yellow')\n  .map(([k, v]) => k);\n\nconst summary = {\n  overall_status: data.overall_status,\n  confidence_score: confidence,\n  red_block_count: redBlocks.length,\n  yellow_block_count: yellowBlocks.length,\n  red_blocks: redBlocks,\n  yellow_blocks: yellowBlocks,\n  gate_failure_count: data.gate_failures?.length || 0,\n  contradiction_count: data.contradiction_count || 0,\n  data_trust_coefficient: data.data_trust_coefficient\n};\n\nreturn [{\n  json: {\n    audit_id: data.audit_id,\n    timestamp: new Date().toISOString(),\n    block_scores: data.block_scores,\n    block_statuses: data.block_statuses,\n    block_details: data.block_details,\n    gate_failures: data.gate_failures,\n    contradictions: data.contradictions,\n    flags: data.flags,\n    summary\n  }\n}];"
+      },
+      "id": "finalize-scoring",
+      "name": "Finalize Scoring",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1130, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}"
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1,
+      "position": [1350, 300]
+    }
+  ],
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "Calculate Block Scores",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Block Scores": {
+      "main": [
+        [
+          {
+            "node": "Apply Gate Rules",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Apply Gate Rules": {
+      "main": [
+        [
+          {
+            "node": "Cross-Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cross-Validation": {
+      "main": [
+        [
+          {
+            "node": "Finalize Scoring",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Finalize Scoring": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "name": "Hiring Audit"
+    }
+  ]
+}
