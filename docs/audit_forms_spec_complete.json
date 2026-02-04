@@ -1,0 +1,533 @@
+{
+  "auditName": "Hiring Execution & Talent Efficiency Audit",
+  "version": "2.0",
+  "forms": {
+    "configuration": {
+      "formId": "config",
+      "title": "Audit Configuration",
+      "description": "Configure your audit scope and identify respondents. This form is completed by the audit buyer.",
+      "estimatedTime": "5 minutes",
+      "respondent": "Audit Buyer (HR/TA Leadership or C-level)",
+      "questions": [
+        {
+          "id": "company_name",
+          "type": "text",
+          "required": true,
+          "question": "Company Name",
+          "placeholder": "Enter company name"
+        },
+        {
+          "id": "contact_email",
+          "type": "email",
+          "required": true,
+          "question": "Primary Contact Email",
+          "placeholder": "email@company.com"
+        },
+        {
+          "id": "company_type",
+          "type": "dropdown",
+          "required": true,
+          "question": "What type of company are you?",
+          "options": [
+            "IT Product Company",
+            "IT Services / Outsourcing",
+            "Recruitment Agency / RPO",
+            "Non-IT Company",
+            "Mixed / Hybrid"
+          ]
+        },
+        {
+          "id": "company_size",
+          "type": "dropdown",
+          "required": true,
+          "question": "Company size (total headcount)",
+          "options": [
+            "1-50 employees",
+            "51-200 employees",
+            "201-500 employees",
+            "501-1000 employees",
+            "1001-5000 employees",
+            "5000+ employees"
+          ],
+          "logic": {
+            "1-50 employees": { "recommendTier": "lite", "blockAdjustments": ["reduceFormality"] },
+            "51-200 employees": { "recommendTier": "standard" },
+            "201-500 employees": { "recommendTier": "standard", "enableBlock4": true },
+            "501-1000 employees": { "recommendTier": "premium", "enableAllBlocks": true },
+            "1001-5000 employees": { "recommendTier": "premium", "enableAllBlocks": true },
+            "5000+ employees": { "recommendTier": "premium", "enableAllBlocks": true }
+          }
+        },
+        {
+          "id": "hiring_geography",
+          "type": "dropdown",
+          "required": true,
+          "question": "Primary hiring geography",
+          "options": [
+            "Single country",
+            "Regional (multiple countries, same region)",
+            "Global"
+          ]
+        },
+        {
+          "id": "monthly_volume",
+          "type": "dropdown",
+          "required": true,
+          "question": "Average monthly hiring volume (new hires)",
+          "options": [
+            "1-5 per month",
+            "6-15 per month",
+            "16-30 per month",
+            "31-50 per month",
+            "50+ per month"
+          ]
+        },
+        {
+          "id": "hiring_pattern",
+          "type": "dropdown",
+          "required": true,
+          "question": "Typical hiring pattern",
+          "options": [
+            "Mostly planned (>70% from annual plan)",
+            "Mixed (40-70% planned)",
+            "Mostly reactive (<40% planned)"
+          ]
+        },
+        {
+          "id": "ta_function_exists",
+          "type": "dropdown",
+          "required": true,
+          "question": "Is there a dedicated TA function?",
+          "options": [
+            "Yes, dedicated TA department",
+            "Partial (some dedicated, some shared)",
+            "No, HR handles recruitment",
+            "External only (RPO/agencies)"
+          ],
+          "logic": {
+            "Yes, dedicated TA department": { "enableBlock2": true, "enableBlock6": true },
+            "Partial (some dedicated, some shared)": { "enableBlock2": true, "enableBlock6": true },
+            "No, HR handles recruitment": { "enableBlock2": "partial" },
+            "External only (RPO/agencies)": { "enableBlock2": "partial", "focusVendorGovernance": true }
+          }
+        },
+        {
+          "id": "recruiter_count",
+          "type": "dropdown",
+          "required": true,
+          "question": "Number of internal recruiters",
+          "options": [
+            "0 (no internal recruiters)",
+            "1-3",
+            "4-10",
+            "11-25",
+            "25+"
+          ]
+        },
+        {
+          "id": "delivery_layer_exists",
+          "type": "dropdown",
+          "required": true,
+          "question": "Is there a Delivery/Engineering leadership layer involved in hiring?",
+          "options": [
+            "Yes, formally involved",
+            "Partially / depends on role",
+            "No, Hiring Managers decide directly"
+          ],
+          "logic": {
+            "Yes, formally involved": { "enableBlock3": true, "enableBlock5": true },
+            "Partially / depends on role": { "enableBlock3": true, "enableBlock5": "partial" },
+            "No, Hiring Managers decide directly": { "enableBlock3": "partial" }
+          }
+        },
+        {
+          "id": "agency_usage",
+          "type": "dropdown",
+          "required": true,
+          "question": "Use of external recruitment agencies",
+          "options": [
+            "Never",
+            "Sometimes (<20% of hires)",
+            "Often (20-50% of hires)",
+            "Heavily (>50% of hires)"
+          ]
+        },
+        {
+          "id": "audit_tier",
+          "type": "dropdown",
+          "required": true,
+          "question": "Desired audit depth",
+          "options": [
+            "Lite (diagnostic only, ~50 questions)",
+            "Standard (full diagnostic, ~100 questions)",
+            "Premium (full + deep dive, ~150 questions + interviews)"
+          ]
+        },
+        {
+          "id": "include_finance",
+          "type": "dropdown",
+          "required": true,
+          "question": "Include Finance/CFO in the audit?",
+          "options": [
+            "Yes",
+            "No"
+          ]
+        },
+        {
+          "id": "respondent_ceo_email",
+          "type": "email",
+          "required": false,
+          "question": "CEO/COO Email (for Block 1)",
+          "placeholder": "ceo@company.com",
+          "condition": "company_size != '1-50 employees'"
+        },
+        {
+          "id": "respondent_ta_email",
+          "type": "email",
+          "required": true,
+          "question": "Head of TA / VP Recruitment Email (for Blocks 2, 6, 7)",
+          "placeholder": "ta.head@company.com"
+        },
+        {
+          "id": "respondent_delivery_email",
+          "type": "email",
+          "required": false,
+          "question": "Head of Delivery / Engineering Director Email (for Blocks 3, 5)",
+          "placeholder": "delivery@company.com",
+          "condition": "delivery_layer_exists != 'No, Hiring Managers decide directly'"
+        },
+        {
+          "id": "respondent_cfo_email",
+          "type": "email",
+          "required": false,
+          "question": "CFO / Finance Director Email (for Block 4)",
+          "placeholder": "cfo@company.com",
+          "condition": "include_finance == 'Yes'"
+        }
+      ]
+    },
+    "block1_executive": {
+      "formId": "block1",
+      "title": "Block 1: Executive Ownership & Governance",
+      "description": "This block assesses whether hiring is owned, governed, and managed at the business level.",
+      "estimatedTime": "10-15 minutes",
+      "respondent": "CEO / COO / Business Owner / Managing Director",
+      "blockRole": "GATEKEEPER - If RED, overall system cannot exceed YELLOW",
+      "sections": [
+        {
+          "sectionTitle": "Planning & Ownership",
+          "questions": [
+            {
+              "id": "b1_q1",
+              "type": "dropdown",
+              "required": true,
+              "question": "Is hiring formally included in your annual business planning?",
+              "signal": "Planning Maturity",
+              "options": [
+                { "label": "Yes, hiring is part of the annual business plan", "value": 3, "signal": "green" },
+                { "label": "Partially (high-level targets without detailed planning)", "value": 2, "signal": "yellow" },
+                { "label": "No, hiring is planned reactively", "value": 1, "signal": "yellow" },
+                { "label": "No formal hiring planning exists", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "autoFlag": {
+                "condition": "value == 0 && company_size > 100",
+                "flag": "Planning Absence in Mid/Large Company"
+              }
+            },
+            {
+              "id": "b1_q2",
+              "type": "dropdown",
+              "required": true,
+              "question": "At what level is hiring planning aligned with business goals (revenue, delivery, growth)?",
+              "signal": "Business Integration",
+              "options": [
+                { "label": "Fully aligned with business goals", "value": 3, "signal": "green" },
+                { "label": "Partially aligned", "value": 2, "signal": "yellow" },
+                { "label": "Weakly aligned", "value": 1, "signal": "yellow" },
+                { "label": "Not aligned at all", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ]
+            },
+            {
+              "id": "b1_q3",
+              "type": "dropdown",
+              "required": true,
+              "critical": true,
+              "question": "Who owns the hiring outcome at the business level?",
+              "signal": "Accountability Clarity",
+              "options": [
+                { "label": "CEO / Founder", "value": 3, "signal": "green" },
+                { "label": "COO / Business Operations", "value": 3, "signal": "green" },
+                { "label": "Head of HR / TA", "value": 2, "signal": "yellow" },
+                { "label": "Shared ownership (no single owner)", "value": 1, "signal": "yellow" },
+                { "label": "No clear owner", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "autoFlag": {
+                "condition": "value == 0 || value == 1",
+                "flag": "Ownership Gap - Potential Gate Failure"
+              }
+            },
+            {
+              "id": "b1_q4",
+              "type": "dropdown",
+              "required": true,
+              "question": "Is hiring success discussed as a business responsibility or as a support function issue?",
+              "signal": "Organizational Framing",
+              "options": [
+                { "label": "Business responsibility", "value": 3, "signal": "green" },
+                { "label": "Mixed (depends on situation)", "value": 2, "signal": "yellow" },
+                { "label": "Mostly HR / TA responsibility", "value": 1, "signal": "yellow" },
+                { "label": "Support function issue", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ]
+            }
+          ]
+        },
+        {
+          "sectionTitle": "Visibility & Reporting",
+          "questions": [
+            {
+              "id": "b1_q5",
+              "type": "dropdown",
+              "required": true,
+              "critical": true,
+              "question": "How often does business leadership review hiring-related reports?",
+              "signal": "Visibility Discipline",
+              "options": [
+                { "label": "Monthly", "value": 3, "signal": "green" },
+                { "label": "Quarterly", "value": 2, "signal": "yellow" },
+                { "label": "Ad-hoc (only when issues arise)", "value": 1, "signal": "yellow" },
+                { "label": "Rarely", "value": 0, "signal": "red" },
+                { "label": "Never", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "crossValidation": {
+                "validateWith": "b7_q2",
+                "contradiction": "b1_q5 >= 2 && b7_q2 <= 1",
+                "flag": "CV-B7-01: Executive Visibility Illusion"
+              }
+            },
+            {
+              "id": "b1_q6",
+              "type": "dropdown",
+              "required": true,
+              "question": "What level of visibility does leadership have into hiring progress?",
+              "signal": "Risk Awareness",
+              "options": [
+                { "label": "Clear visibility into progress, risks, and delays", "value": 3, "signal": "green" },
+                { "label": "High-level overview only", "value": 2, "signal": "yellow" },
+                { "label": "Limited visibility", "value": 1, "signal": "yellow" },
+                { "label": "No real visibility", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "autoFlag": {
+                "condition": "value == 3 && hiring_delays_frequent",
+                "flag": "Visibility claimed but delays persist"
+              }
+            }
+          ]
+        },
+        {
+          "sectionTitle": "Financial Awareness",
+          "questions": [
+            {
+              "id": "b1_q7",
+              "type": "dropdown",
+              "required": true,
+              "question": "Does the business understand where money is lost due to hiring delays or failures?",
+              "signal": "Financial Literacy",
+              "options": [
+                { "label": "Yes, we clearly understand key loss areas", "value": 3, "signal": "green" },
+                { "label": "We have a general understanding", "value": 2, "signal": "yellow" },
+                { "label": "We suspect losses but cannot identify specifics", "value": 1, "signal": "yellow" },
+                { "label": "No clear understanding", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "crossValidation": {
+                "validateWith": "b4_q6",
+                "contradiction": "b1_q7 >= 2 && b4_q6 <= 1",
+                "flag": "Financial Awareness Illusion"
+              }
+            },
+            {
+              "id": "b1_q8",
+              "type": "dropdown",
+              "required": true,
+              "question": "Are hiring delays discussed in the context of revenue or delivery impact?",
+              "signal": "Business Consequence Linkage",
+              "options": [
+                { "label": "Regularly", "value": 3, "signal": "green" },
+                { "label": "Sometimes", "value": 2, "signal": "yellow" },
+                { "label": "Rarely", "value": 1, "signal": "yellow" },
+                { "label": "Never", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ]
+            }
+          ]
+        },
+        {
+          "sectionTitle": "Governance & Decision Logic",
+          "questions": [
+            {
+              "id": "b1_q9",
+              "type": "dropdown",
+              "required": true,
+              "question": "Is hiring considered a potential bottleneck for business execution?",
+              "signal": "Systems Thinking",
+              "options": [
+                { "label": "Yes, and it is actively managed", "value": 3, "signal": "green" },
+                { "label": "Yes, but only when problems escalate", "value": 2, "signal": "yellow" },
+                { "label": "Occasionally", "value": 1, "signal": "yellow" },
+                { "label": "Rarely or Never", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "crossValidation": {
+                "validateWith": "b6_q7",
+                "contradiction": "b1_q9 == 0 && b6_backlog_exists",
+                "flag": "CV-20: Bottleneck Denial"
+              }
+            },
+            {
+              "id": "b1_q10",
+              "type": "dropdown",
+              "required": true,
+              "question": "When hiring becomes a bottleneck, how does leadership typically react?",
+              "signal": "Governance Under Stress",
+              "options": [
+                { "label": "Re-prioritizes roles and resources", "value": 3, "signal": "green" },
+                { "label": "Escalates pressure on teams", "value": 2, "signal": "yellow" },
+                { "label": "Delegates issue to HR / TA", "value": 1, "signal": "yellow" },
+                { "label": "Reacts ad-hoc without a clear approach", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "autoFlag": {
+                "condition": "value == 2",
+                "flag": "Pressure Escalation Pattern - may indicate governance gap"
+              }
+            },
+            {
+              "id": "b1_q11",
+              "type": "dropdown",
+              "required": true,
+              "critical": true,
+              "question": "Are there regular business-level meetings to prioritize hiring needs across teams?",
+              "signal": "Governance Structure",
+              "options": [
+                { "label": "Yes, on a regular cadence", "value": 3, "signal": "green" },
+                { "label": "Yes, but irregularly", "value": 2, "signal": "yellow" },
+                { "label": "Only during critical situations", "value": 1, "signal": "yellow" },
+                { "label": "No such meetings exist", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "crossValidation": {
+                "validateWith": "b3_q_prioritization",
+                "contradiction": "b1_q11 >= 2 && b3_adhoc_prioritization",
+                "flag": "CV-03: Cadence Theatre"
+              }
+            },
+            {
+              "id": "b1_q12",
+              "type": "dropdown",
+              "required": true,
+              "question": "How are hiring priorities typically decided?",
+              "signal": "Decision Logic Maturity",
+              "options": [
+                { "label": "Based on business impact and strategy", "value": 3, "signal": "green" },
+                { "label": "Based on agreed criteria", "value": 3, "signal": "green" },
+                { "label": "Based on urgency and pressure", "value": 2, "signal": "yellow" },
+                { "label": "Based on who escalates louder", "value": 1, "signal": "red" },
+                { "label": "No formal prioritization", "value": 0, "signal": "red" },
+                { "label": "Not relevant", "value": -1, "signal": "skip" }
+              ],
+              "autoFlag": {
+                "condition": "value == 1",
+                "flag": "Political Prioritization Detected"
+              }
+            }
+          ]
+        }
+      ],
+      "scoring": {
+        "greenThreshold": 2.4,
+        "yellowThreshold": 1.5,
+        "criticalDomains": ["Planning & Ownership", "Visibility & Reporting", "Governance & Decision Logic"],
+        "gateRule": "If Block 1 = RED, overall system = RED (Ownerless Hiring)"
+      }
+    }
+  },
+  "crossValidationRules": [
+    {
+      "id": "CV-01",
+      "source": { "block": 1, "question": "b1_q3", "condition": "value >= 2" },
+      "validator": { "block": 6, "question": "b6_q2", "condition": "value == 0" },
+      "severity": "force-red",
+      "diagnosis": "Ownerless Hiring in Practice"
+    },
+    {
+      "id": "CV-02",
+      "source": { "block": 1, "question": "b1_q1", "condition": "value >= 2" },
+      "validator": { "block": 2, "question": "b2_q7", "condition": "value <= 1" },
+      "severity": "hard",
+      "diagnosis": "Planning Illusion"
+    },
+    {
+      "id": "CV-05",
+      "source": { "block": 2, "question": "b2_q4", "condition": "value == 3" },
+      "validator": { "block": 6, "question": "b6_q5", "condition": "value <= 1" },
+      "severity": "force-red",
+      "diagnosis": "SLA Theater"
+    },
+    {
+      "id": "CV-08",
+      "source": { "block": 3, "question": "b3_q3", "condition": "value >= 2" },
+      "validator": { "block": 5, "question": "b5_q2", "condition": "value <= 1" },
+      "severity": "force-red",
+      "diagnosis": "Interview Bottleneck Masked"
+    }
+  ],
+  "scoringEngine": {
+    "questionScore": {
+      "green": 3,
+      "yellow": 2,
+      "yellowOrange": 1,
+      "red": 0,
+      "skip": -1
+    },
+    "blockThresholds": {
+      "green": { "min": 2.3, "noCriticalRed": true },
+      "yellow": { "min": 1.5 },
+      "red": { "below": 1.5, "orCriticalRed": true }
+    },
+    "gateLogic": {
+      "block1Red": "forceOverallRed",
+      "block2Red": "forceOverallRed",
+      "block4Red": "forceOverallRed",
+      "block3Red": "forceOverallRed",
+      "block5Red": "forceOverallRed",
+      "block6Red": "capOverallYellow",
+      "block7Red": "applyLowConfidenceModifier"
+    },
+    "dataTrustCoefficient": {
+      "block7Green": 1.0,
+      "block7YellowMinor": 0.85,
+      "block7YellowData": 0.75,
+      "block7Red": 0.6
+    }
+  },
+  "exportFormats": {
+    "tally": {
+      "note": "Import as JSON to Tally.so",
+      "supportedFeatures": ["conditionalLogic", "multiplePages", "calculations"]
+    },
+    "typeform": {
+      "note": "Use Typeform API to create",
+      "supportedFeatures": ["conditionalLogic", "multiplePages", "hiddenFields"]
+    },
+    "googleForms": {
+      "note": "Manual creation required, logic limited",
+      "supportedFeatures": ["basicConditional", "sections"]
+    }
+  }
+}

@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hiring Execution & Talent Efficiency Audit</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+        }
+        
+        .header {
+            background: rgba(0,0,0,0.3);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+        
+        .header-role {
+            color: #64748b;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+            margin-top: 16px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+        
+        .block-nav {
+            background: rgba(0,0,0,0.2);
+            padding: 12px 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            overflow-x: auto;
+        }
+        
+        .block-nav-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            gap: 8px;
+        }
+        
+        .block-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.02);
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+        
+        .block-btn.active {
+            border: 2px solid #3b82f6;
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+        }
+        
+        .block-btn .status-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+        
+        .main-content {
+            padding: 40px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .block-title {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+        
+        .block-description {
+            color: #94a3b8;
+            font-size: 15px;
+            margin-bottom: 32px;
+        }
+        
+        .section {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .question {
+            margin-bottom: 28px;
+        }
+        
+        .question:last-child {
+            margin-bottom: 0;
+        }
+        
+        .question-label {
+            display: block;
+            color: #f1f5f9;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .critical-badge {
+            display: inline-block;
+            margin-left: 8px;
+            font-size: 10px;
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .signal-hint {
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
+        
+        select {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 10px;
+            color: #f8fafc;
+            font-size: 14px;
+            font-family: inherit;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 20px;
+        }
+        
+        select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+        
+        select option {
+            background: #1e293b;
+            color: #f8fafc;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+        
+        .btn-secondary {
+            background: rgba(255,255,255,0.1);
+            color: #e2e8f0;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .btn-secondary:disabled {
+            background: rgba(255,255,255,0.05);
+            color: #475569;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(59, 130, 246, 0.4);
+        }
+        
+        /* Results Page */
+        .results-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .results-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.02em;
+        }
+        
+        .results-subtitle {
+            color: #94a3b8;
+            margin-bottom: 40px;
+        }
+        
+        .results-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .results-card h2 {
+            font-size: 20px;
+            margin-bottom: 24px;
+        }
+        
+        .block-results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .block-result-item {
+            background: rgba(255,255,255,0.02);
+            border-radius: 12px;
+            padding: 20px;
+        }
+        
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-bottom: 12px;
+        }
+        
+        .status-green { background: #10B981; box-shadow: 0 0 12px rgba(16, 185, 129, 0.6); }
+        .status-yellow { background: #F59E0B; box-shadow: 0 0 12px rgba(245, 158, 11, 0.6); }
+        .status-red { background: #EF4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); }
+        .status-gray { background: #6B7280; }
+        
+        .block-result-name {
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .block-result-status {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        @media (max-width: 640px) {
+            .header, .block-nav, .main-content {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+            
+            .block-title {
+                font-size: 24px;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <h1>Hiring Execution Audit</h1>
+                <div class="header-role" id="currentRole">Configuration</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar" style="width: 12.5%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Block Navigation -->
+        <div class="block-nav">
+            <div class="block-nav-inner" id="blockNav">
+                <button class="block-btn active" data-block="config">Config</button>
+                <button class="block-btn" data-block="block1">B1</button>
+                <button class="block-btn" data-block="block2">B2</button>
+                <button class="block-btn" data-block="block3">B3</button>
+                <button class="block-btn" data-block="block4">B4</button>
+                <button class="block-btn" data-block="block5">B5</button>
+                <button class="block-btn" data-block="block6">B6</button>
+                <button class="block-btn" data-block="block7">B7</button>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content" id="formContent">
+            <!-- Forms will be rendered here by JavaScript -->
+        </div>
+        
+        <!-- Results Page (Hidden by default) -->
+        <div class="results-container hidden" id="resultsPage">
+            <h1 class="results-title">Audit Results</h1>
+            <p class="results-subtitle">Hiring Execution & Talent Efficiency Assessment</p>
+            
+            <div class="results-card">
+                <h2>Block Status Overview</h2>
+                <div class="block-results-grid" id="blockResultsGrid">
+                    <!-- Results will be rendered here -->
+                </div>
+            </div>
+            
+            <div class="results-card">
+                <h2>Summary</h2>
+                <div id="resultsSummary" style="color: #94a3b8; font-size: 14px; line-height: 1.8;">
+                    <!-- Summary will be rendered here -->
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" onclick="resetAudit()">Start New Audit</button>
+        </div>
+    </div>
+
+    <script>
+        // Audit Data Structure
+        const auditBlocks = {
+            config: {
+                title: "Audit Configuration",
+                role: "Audit Buyer",
+                description: "Configure your audit scope and identify respondents",
+                sections: [
+                    {
+                        title: "Company Identity",
+                        questions: [
+                            { id: "company_type", text: "What type of company are you?", options: ["IT Product Company", "IT Services / Outsourcing", "Recruitment Agency / RPO", "Non-IT Company", "Mixed / Hybrid"] },
+                            { id: "company_size", text: "Company size (total headcount)", options: ["1-50 employees", "51-200 employees", "201-500 employees", "501-1000 employees", "5000+ employees"] },
+                            { id: "hiring_geography", text: "Primary hiring geography", options: ["Single country", "Regional (multiple countries)", "Global"] }
+                        ]
+                    },
+                    {
+                        title: "Hiring Scale",
+                        questions: [
+                            { id: "monthly_volume", text: "Average monthly hiring volume", options: ["1-5 per month", "6-15 per month", "16-30 per month", "31-50 per month", "50+ per month"] },
+                            { id: "hiring_pattern", text: "Typical hiring pattern", options: ["Mostly planned (>70% from annual plan)", "Mixed (40-70% planned)", "Mostly reactive (<40% planned)"] }
+                        ]
+                    },
+                    {
+                        title: "TA Function",
+                        questions: [
+                            { id: "ta_function", text: "Is there a dedicated TA function?", options: ["Yes, dedicated TA department", "Partial (some dedicated, some shared)", "No, HR handles recruitment", "External only (RPO/agencies)"] },
+                            { id: "audit_tier", text: "Desired audit depth", options: ["Lite (~50 questions)", "Standard (~100 questions)", "Premium (~150 questions)"] }
+                        ]
+                    }
+                ]
+            },
+            block1: {
+                title: "Block 1: Executive Ownership",
+                role: "CEO / COO / Business Owner",
+                description: "Assess whether hiring is owned and governed at business level",
+                sections: [
+                    {
+                        title: "Planning & Ownership",
+                        questions: [
+                            { id: "b1_q1", text: "Is hiring formally included in your annual business planning?", signal: "Planning Maturity", options: [
+                                { label: "Yes, part of annual plan", value: 3 },
+                                { label: "Partially (high-level targets)", value: 2 },
+                                { label: "No, planned reactively", value: 1 },
+                                { label: "No formal planning exists", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b1_q2", text: "At what level is hiring aligned with business goals?", signal: "Business Integration", options: [
+                                { label: "Fully aligned", value: 3 },
+                                { label: "Partially aligned", value: 2 },
+                                { label: "Weakly aligned", value: 1 },
+                                { label: "Not aligned", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b1_q3", text: "Who owns hiring outcome at business level?", signal: "Accountability", critical: true, options: [
+                                { label: "CEO / Founder", value: 3 },
+                                { label: "COO / Business Ops", value: 3 },
+                                { label: "Head of HR / TA", value: 2 },
+                                { label: "Shared ownership", value: 1 },
+                                { label: "No clear owner", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Visibility & Reporting",
+                        questions: [
+                            { id: "b1_q4", text: "How often does leadership review hiring reports?", signal: "Visibility", critical: true, options: [
+                                { label: "Monthly", value: 3 },
+                                { label: "Quarterly", value: 2 },
+                                { label: "Ad-hoc (when issues)", value: 1 },
+                                { label: "Rarely or Never", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b1_q5", text: "What visibility does leadership have into hiring progress?", signal: "Risk Awareness", options: [
+                                { label: "Clear visibility into progress, risks, delays", value: 3 },
+                                { label: "High-level overview only", value: 2 },
+                                { label: "Limited visibility", value: 1 },
+                                { label: "No real visibility", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Governance",
+                        questions: [
+                            { id: "b1_q6", text: "Is hiring considered a potential execution bottleneck?", signal: "Systems Thinking", options: [
+                                { label: "Yes, actively managed", value: 3 },
+                                { label: "Yes, only when escalates", value: 2 },
+                                { label: "Occasionally", value: 1 },
+                                { label: "Rarely or Never", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b1_q7", text: "Are there regular meetings to prioritize hiring?", signal: "Governance Structure", critical: true, options: [
+                                { label: "Yes, regular cadence", value: 3 },
+                                { label: "Yes, irregularly", value: 2 },
+                                { label: "Only critical situations", value: 1 },
+                                { label: "No such meetings", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b1_q8", text: "How are hiring priorities decided?", signal: "Decision Logic", options: [
+                                { label: "Based on business impact/strategy", value: 3 },
+                                { label: "Based on agreed criteria", value: 3 },
+                                { label: "Based on urgency/pressure", value: 2 },
+                                { label: "Who escalates louder", value: 1 },
+                                { label: "No formal prioritization", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block2: {
+                title: "Block 2: TA Leadership",
+                role: "VP / Head of Talent Acquisition",
+                description: "Evaluate TA capacity, processes, and governance",
+                sections: [
+                    {
+                        title: "Planning & Forecasting",
+                        questions: [
+                            { id: "b2_q1", text: "Do you have an annual hiring plan approved?", signal: "Planning Maturity", options: [
+                                { label: "Yes, approved and baselined", value: 3 },
+                                { label: "Approved but frequently reworked", value: 2 },
+                                { label: "Partial (key departments)", value: 1 },
+                                { label: "No annual plan", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b2_q2", text: "How is hiring demand collected?", signal: "Intake Governance", options: [
+                                { label: "Structured intake with documented rules", value: 3 },
+                                { label: "Structured but varies by function", value: 2 },
+                                { label: "Ad-hoc via chats/emails", value: 1 },
+                                { label: "Mostly escalations/urgent", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "SLA & Process",
+                        questions: [
+                            { id: "b2_q3", text: "Do you have defined SLAs for recruitment lifecycle?", signal: "SLA Maturity", critical: true, options: [
+                                { label: "Yes, most steps and role families", value: 3 },
+                                { label: "Yes, few steps only", value: 2 },
+                                { label: "No SLAs", value: 1 },
+                                { label: "Not sure", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b2_q4", text: "Are SLAs monitored and reported?", signal: "SLA Governance", options: [
+                                { label: "Yes, visible to stakeholders", value: 3 },
+                                { label: "Monitored internally only", value: 2 },
+                                { label: "Tracked ad-hoc", value: 1 },
+                                { label: "Not monitored", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Capacity & Data",
+                        questions: [
+                            { id: "b2_q5", text: "Is recruiter workload formally tracked?", signal: "Capacity Visibility", critical: true, options: [
+                                { label: "Yes, real-time per recruiter", value: 3 },
+                                { label: "Periodically (weekly/monthly)", value: 2 },
+                                { label: "Informally monitored", value: 1 },
+                                { label: "Not tracked", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b2_q6", text: "Do you have single source of truth for pipeline?", signal: "Data Reliability", critical: true, options: [
+                                { label: "Yes, ATS clean and trusted", value: 3 },
+                                { label: "Partially (data unreliable)", value: 2 },
+                                { label: "Spread across tools", value: 1 },
+                                { label: "Not sure", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block3: {
+                title: "Block 3: Delivery Leadership",
+                role: "Head of Delivery / Engineering Directors",
+                description: "Assess interview capacity, feedback discipline, and demand quality",
+                sections: [
+                    {
+                        title: "Demand & Capacity",
+                        questions: [
+                            { id: "b3_q1", text: "Are role requirements clearly defined at kickoff?", signal: "Requirement Clarity", options: [
+                                { label: "Yes, detailed and stable", value: 3 },
+                                { label: "Mostly clear, some gaps", value: 2 },
+                                { label: "Often unclear/evolving", value: 1 },
+                                { label: "Rarely clear", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b3_q2", text: "Is interviewer availability formally planned?", signal: "Capacity Realism", critical: true, options: [
+                                { label: "Yes, fixed windows planned", value: 3 },
+                                { label: "Planned but violated", value: 2 },
+                                { label: "Ad-hoc availability", value: 1 },
+                                { label: "No planning", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Feedback & Decisions",
+                        questions: [
+                            { id: "b3_q3", text: "How timely is interview feedback provided?", signal: "Execution Reliability", critical: true, options: [
+                                { label: "Within 24 hours consistently", value: 3 },
+                                { label: "Within 48 hours usually", value: 2 },
+                                { label: "Often delayed 3-5 days", value: 1 },
+                                { label: "Frequently missing", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b3_q4", text: "Who makes final hiring decisions?", signal: "Accountability", options: [
+                                { label: "Clear authority with escalation", value: 3 },
+                                { label: "Shared with tie-breaker", value: 2 },
+                                { label: "Informal consensus", value: 1 },
+                                { label: "Single veto power", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block4: {
+                title: "Block 4: Financial Governance",
+                role: "CFO / Finance Director",
+                description: "Evaluate TA budget ownership and cost visibility",
+                sections: [
+                    {
+                        title: "Budget Ownership",
+                        questions: [
+                            { id: "b4_q1", text: "Is there formally approved annual TA budget?", signal: "Budget Governance", critical: true, options: [
+                                { label: "Yes, line-item tracked", value: 3 },
+                                { label: "Yes, high-level only", value: 2 },
+                                { label: "Partial (major items)", value: 1 },
+                                { label: "No formal budget", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b4_q2", text: "Is TA budget derived from hiring plan?", signal: "Planning Integration", critical: true, options: [
+                                { label: "Yes, calculated from plan", value: 3 },
+                                { label: "Partially aligned", value: 2 },
+                                { label: "Set independently", value: 1 },
+                                { label: "No hiring plan exists", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Cost Visibility",
+                        questions: [
+                            { id: "b4_q3", text: "Does Finance have visibility into TA costs?", signal: "Transparency", options: [
+                                { label: "Full itemized reporting", value: 3 },
+                                { label: "High-level only", value: 2 },
+                                { label: "Limited visibility", value: 1 },
+                                { label: "No visibility", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b4_q4", text: "How often is TA spend reviewed against budget?", signal: "Review Discipline", critical: true, options: [
+                                { label: "Monthly", value: 3 },
+                                { label: "Quarterly", value: 2 },
+                                { label: "Ad-hoc", value: 1 },
+                                { label: "Never", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block5: {
+                title: "Block 5: Technical Interviewing",
+                role: "Engineering Director / CDO",
+                description: "Assess technical evaluation governance",
+                sections: [
+                    {
+                        title: "Capacity & Standards",
+                        questions: [
+                            { id: "b5_q1", text: "Is technical interview capacity planned?", signal: "Capacity Planning", critical: true, options: [
+                                { label: "Planned with calendar ownership", value: 3 },
+                                { label: "Partially planned", value: 2 },
+                                { label: "Not planned", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b5_q2", text: "Are interview SLAs defined and enforced?", signal: "SLA Enforcement", critical: true, options: [
+                                { label: "Defined and enforced", value: 3 },
+                                { label: "Defined but violated", value: 2 },
+                                { label: "Not defined", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b5_q3", text: "Are evaluation criteria standardized?", signal: "Evaluation Standards", options: [
+                                { label: "Standardized across roles", value: 3 },
+                                { label: "Partially standardized", value: 2 },
+                                { label: "Individual preference", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block6: {
+                title: "Block 6: Recruitment Operations",
+                role: "TA Operations Lead",
+                description: "Validate operational stability and ATS discipline",
+                sections: [
+                    {
+                        title: "Process & Data",
+                        questions: [
+                            { id: "b6_q1", text: "Do you have documented hiring process that's used?", signal: "Process Repeatability", options: [
+                                { label: "Yes, documented and enforced", value: 3 },
+                                { label: "Documented but inconsistent", value: 2 },
+                                { label: "Partially documented", value: 1 },
+                                { label: "No documented process", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b6_q2", text: "Where is single source of truth for pipeline?", signal: "Data Reliability", critical: true, options: [
+                                { label: "ATS mandatory and trusted", value: 3 },
+                                { label: "ATS used, parallel trackers exist", value: 2 },
+                                { label: "Spreadsheets primary", value: 1 },
+                                { label: "No consistent source", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "Capacity & Resilience",
+                        questions: [
+                            { id: "b6_q3", text: "Do you use capacity model for workload?", signal: "Capacity Planning", critical: true, options: [
+                                { label: "Yes, used and updated", value: 3 },
+                                { label: "Exists but rarely used", value: 2 },
+                                { label: "Informal assumptions", value: 1 },
+                                { label: "No capacity thinking", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b6_q4", text: "If key recruiter absent 2 weeks, what happens?", signal: "Key-Person Risk", options: [
+                                { label: "Coverage plan, pipeline continues", value: 3 },
+                                { label: "Coverage but throughput drops", value: 2 },
+                                { label: "Ad-hoc, significant stalls", value: 1 },
+                                { label: "Work stops", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            },
+            block7: {
+                title: "Block 7: Reporting & AI",
+                role: "TA Leadership / IT",
+                description: "Validate data integrity and AI governance",
+                sections: [
+                    {
+                        title: "Reporting",
+                        questions: [
+                            { id: "b7_q1", text: "Does company have standardized TA reports?", signal: "Reporting Maturity", critical: true, options: [
+                                { label: "Yes, automated real-time", value: 3 },
+                                { label: "Yes, automated scheduled", value: 2 },
+                                { label: "Yes, manually compiled", value: 1 },
+                                { label: "Partial or no reporting", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]},
+                            { id: "b7_q2", text: "Is ATS single source of truth?", signal: "System of Record", critical: true, options: [
+                                { label: "Yes, mandatory and trusted", value: 3 },
+                                { label: "Primary but parallel exists", value: 2 },
+                                { label: "One of several unclear", value: 1 },
+                                { label: "Spreadsheets primary or no ATS", value: 0 },
+                                { label: "Not relevant", value: -1 }
+                            ]}
+                        ]
+                    },
+                    {
+                        title: "AI Governance",
+                        questions: [
+                            { id: "b7_q3", text: "Is AI used in hiring process?", signal: "AI Adoption", options: [
+                                { label: "Yes, strategically across stages", value: 3 },
+                                { label: "Yes, specific areas", value: 2 },
+                                { label: "Experimenting", value: 1 },
+                                { label: "No AI in use", value: 0 },
+                                { label: "Not sure what's used", value: -1 }
+                            ]},
+                            { id: "b7_q4", text: "Is there AI governance policy?", signal: "AI Governance", options: [
+                                { label: "Yes, comprehensive enforced", value: 3 },
+                                { label: "Yes, basic guidelines", value: 2 },
+                                { label: "Informal understanding", value: 1 },
+                                { label: "No policy", value: 0 },
+                                { label: "Not applicable", value: -1 }
+                            ]}
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // State
+        let currentBlock = 'config';
+        let responses = {};
+        let completedBlocks = [];
+        const blockOrder = ['config', 'block1', 'block2', 'block3', 'block4', 'block5', 'block6', 'block7'];
+
+        // Functions
+        function renderForm() {
+            const block = auditBlocks[currentBlock];
+            const formContent = document.getElementById('formContent');
+            
+            let html = `
+                <h2 class="block-title">${block.title}</h2>
+                <p class="block-description">${block.description}</p>
+            `;
+            
+            block.sections.forEach(section => {
+                html += `<div class="section"><h3 class="section-title">${section.title}</h3>`;
+                
+                section.questions.forEach(q => {
+                    const isObject = q.options[0] && typeof q.options[0] === 'object';
+                    
+                    html += `
+                        <div class="question">
+                            <label class="question-label">
+                                ${q.text}
+                                ${q.critical ? '<span class="critical-badge">CRITICAL</span>' : ''}
+                            </label>
+                            ${q.signal ? `<div class="signal-hint">Signal: ${q.signal}</div>` : ''}
+                            <select id="${q.id}" onchange="handleResponse('${q.id}', this.value)">
+                                <option value="">Select an option...</option>
+                                ${q.options.map((opt, i) => {
+                                    const value = isObject ? opt.value : opt;
+                                    const label = isObject ? opt.label : opt;
+                                    const selected = responses[q.id] == value ? 'selected' : '';
+                                    return `<option value="${value}" ${selected}>${label}</option>`;
+                                }).join('')}
+                            </select>
+                        </div>
+                    `;
+                });
+                
+                html += '</div>';
+            });
+            
+            const currentIndex = blockOrder.indexOf(currentBlock);
+            const isFirst = currentIndex === 0;
+            const isLast = currentIndex === blockOrder.length - 1;
+            
+            html += `
+                <div class="nav-buttons">
+                    <button class="btn btn-secondary" onclick="prevBlock()" ${isFirst ? 'disabled' : ''}>← Previous</button>
+                    <button class="btn btn-primary" onclick="nextBlock()">${isLast ? 'View Results' : 'Next Block →'}</button>
+                </div>
+            `;
+            
+            formContent.innerHTML = html;
+            updateUI();
+        }
+
+        function handleResponse(questionId, value) {
+            responses[questionId] = value;
+        }
+
+        function nextBlock() {
+            const currentIndex = blockOrder.indexOf(currentBlock);
+            if (!completedBlocks.includes(currentBlock)) {
+                completedBlocks.push(currentBlock);
+            }
+            
+            if (currentIndex < blockOrder.length - 1) {
+                currentBlock = blockOrder[currentIndex + 1];
+                renderForm();
+                window.scrollTo(0, 0);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevBlock() {
+            const currentIndex = blockOrder.indexOf(currentBlock);
+            if (currentIndex > 0) {
+                currentBlock = blockOrder[currentIndex - 1];
+                renderForm();
+                window.scrollTo(0, 0);
+            }
+        }
+
+        function goToBlock(blockId) {
+            currentBlock = blockId;
+            document.getElementById('resultsPage').classList.add('hidden');
+            document.getElementById('formContent').classList.remove('hidden');
+            renderForm();
+        }
+
+        function calculateBlockStatus(blockId) {
+            const block = auditBlocks[blockId];
+            if (!block || !block.sections) return null;
+            
+            let totalScore = 0;
+            let count = 0;
+            let hasCriticalRed = false;
+            
+            block.sections.forEach(section => {
+                section.questions.forEach(q => {
+                    const response = parseFloat(responses[q.id]);
+                    if (!isNaN(response) && response !== -1) {
+                        totalScore += response;
+                        count++;
+                        if (q.critical && response === 0) {
+                            hasCriticalRed = true;
+                        }
+                    }
+                });
+            });
+            
+            if (count === 0) return 'gray';
+            
+            const average = totalScore / count;
+            
+            if (hasCriticalRed || average < 1.5) return 'red';
+            if (average < 2.3) return 'yellow';
+            return 'green';
+        }
+
+        function getStatusLabel(status) {
+            switch(status) {
+                case 'green': return 'Healthy';
+                case 'yellow': return 'At Risk';
+                case 'red': return 'Critical';
+                default: return 'Pending';
+            }
+        }
+
+        function showResults() {
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('resultsPage').classList.remove('hidden');
+            
+            const grid = document.getElementById('blockResultsGrid');
+            let html = '';
+            
+            blockOrder.slice(1).forEach(blockId => {
+                const status = calculateBlockStatus(blockId);
+                const block = auditBlocks[blockId];
+                html += `
+                    <div class="block-result-item" style="border: 2px solid ${status === 'green' ? '#10B98140' : status === 'yellow' ? '#F59E0B40' : status === 'red' ? '#EF444440' : '#6B728040'}">
+                        <div class="status-indicator status-${status}"></div>
+                        <div class="block-result-name">${block.title.split(':')[0]}</div>
+                        <div class="block-result-status">${getStatusLabel(status)}</div>
+                    </div>
+                `;
+            });
+            
+            grid.innerHTML = html;
+            
+            const summary = document.getElementById('resultsSummary');
+            summary.innerHTML = `
+                <p>Total questions answered: ${Object.keys(responses).length}</p>
+                <p>Blocks completed: ${completedBlocks.length}</p>
+                <p style="margin-top: 16px; padding: 16px; background: rgba(16, 185, 129, 0.1); border-radius: 8px; color: #10B981;">
+                    ✓ Audit data collected successfully. Export this data for PDF report generation.
+                </p>
+                <div style="margin-top: 16px;">
+                    <button class="btn btn-secondary" onclick="exportData()" style="width: auto;">Export Data (JSON)</button>
+                </div>
+            `;
+        }
+
+        function exportData() {
+            const data = {
+                timestamp: new Date().toISOString(),
+                responses: responses,
+                blockStatuses: {}
+            };
+            
+            blockOrder.slice(1).forEach(blockId => {
+                data.blockStatuses[blockId] = calculateBlockStatus(blockId);
+            });
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hiring_audit_${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+        }
+
+        function resetAudit() {
+            currentBlock = 'config';
+            responses = {};
+            completedBlocks = [];
+            document.getElementById('resultsPage').classList.add('hidden');
+            document.getElementById('formContent').classList.remove('hidden');
+            renderForm();
+        }
+
+        function updateUI() {
+            // Update role
+            document.getElementById('currentRole').textContent = auditBlocks[currentBlock].role;
+            
+            // Update progress
+            const currentIndex = blockOrder.indexOf(currentBlock);
+            const progress = ((currentIndex + 1) / blockOrder.length) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+            
+            // Update nav buttons
+            document.querySelectorAll('.block-btn').forEach((btn, i) => {
+                const blockId = btn.dataset.block;
+                btn.classList.toggle('active', blockId === currentBlock);
+                
+                if (completedBlocks.includes(blockId) && blockId !== 'config') {
+                    const status = calculateBlockStatus(blockId);
+                    if (status && status !== 'gray') {
+                        btn.innerHTML = `<span class="status-dot" style="background: ${status === 'green' ? '#10B981' : status === 'yellow' ? '#F59E0B' : '#EF4444'}"></span>${btn.textContent.replace(/.*?(?=B|C)/, '')}`;
+                    }
+                }
+            });
+        }
+
+        // Initialize navigation
+        document.querySelectorAll('.block-btn').forEach(btn => {
+            btn.addEventListener('click', () => goToBlock(btn.dataset.block));
+        });
+
+        // Initial render
+        renderForm();
+    </script>
+</body>
+</html>

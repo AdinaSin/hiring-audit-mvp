@@ -1,0 +1,650 @@
+{
+  "version": "1.0",
+  "library_name": "Hiring Audit Recommendation Library",
+  "recommendations": {
+    "B1-R01": {
+      "risk_id": "B1-R01",
+      "risk_name": "Ownerless Hiring",
+      "block": 1,
+      "trigger": {
+        "question": "b1_q3",
+        "condition": "value <= 1",
+        "description": "No clear owner at executive level"
+      },
+      "severity": "red",
+      "gate_failure": true,
+      "business_impact": "All hiring improvements unstable; conflicts unresolved; accountability diffused",
+      "quick_wins": [
+        {
+          "id": "B1-R01-QW1",
+          "recommendation": "Designate interim hiring owner (CEO/COO) for 90 days",
+          "owner": "CEO",
+          "effort": "1 day",
+          "outcome": "Single point of accountability established"
+        },
+        {
+          "id": "B1-R01-QW2",
+          "recommendation": "Add hiring status to weekly leadership agenda",
+          "owner": "COO/EA",
+          "effort": "2 hours",
+          "outcome": "Regular visibility created"
+        },
+        {
+          "id": "B1-R01-QW3",
+          "recommendation": "Create simple escalation rule: If stuck >5 days → CEO decides",
+          "owner": "CEO",
+          "effort": "1 hour",
+          "outcome": "Decision paralysis reduced"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B1-R01-S1",
+          "recommendation": "Define RACI matrix for hiring decisions",
+          "owner": "HR + Business",
+          "effort": "1 week",
+          "outcome": "Clear accountability at each stage"
+        },
+        {
+          "id": "B1-R01-S2",
+          "recommendation": "Establish monthly Hiring Governance Forum",
+          "owner": "COO",
+          "effort": "2 weeks",
+          "outcome": "Cross-functional prioritization mechanism"
+        },
+        {
+          "id": "B1-R01-S3",
+          "recommendation": "Create executive hiring dashboard with 5 key metrics",
+          "owner": "TA + IT",
+          "effort": "2 weeks",
+          "outcome": "Data-driven visibility"
+        }
+      ],
+      "strategic": [
+        {
+          "id": "B1-R01-ST1",
+          "recommendation": "Embed hiring KPIs in executive OKRs",
+          "owner": "CEO",
+          "effort": "Quarterly",
+          "outcome": "Strategic alignment"
+        }
+      ]
+    },
+    "B1-R02": {
+      "risk_id": "B1-R02",
+      "risk_name": "Planning Blindness",
+      "block": 1,
+      "trigger": {
+        "question": "b1_q1",
+        "condition": "value <= 1",
+        "description": "No formal hiring planning"
+      },
+      "severity": "red",
+      "business_impact": "Reactive hiring; budget surprises; missed delivery windows",
+      "quick_wins": [
+        {
+          "id": "B1-R02-QW1",
+          "recommendation": "Extract current open roles into simple demand tracker",
+          "owner": "TA",
+          "effort": "4 hours",
+          "outcome": "Baseline visibility"
+        },
+        {
+          "id": "B1-R02-QW2",
+          "recommendation": "Collect 90-day hiring forecast from department heads",
+          "owner": "COO",
+          "effort": "3 days",
+          "outcome": "Forward visibility"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B1-R02-S1",
+          "recommendation": "Implement quarterly hiring planning cycle",
+          "owner": "HR + Finance",
+          "effort": "4 weeks",
+          "outcome": "Predictable demand"
+        }
+      ]
+    },
+    "B1-R04": {
+      "risk_id": "B1-R04",
+      "risk_name": "Political Prioritization",
+      "block": 1,
+      "trigger": {
+        "question": "b1_q12",
+        "condition": "value == 1",
+        "description": "Priorities decided by who shouts louder"
+      },
+      "severity": "red",
+      "business_impact": "TA capacity wasted on wrong roles; delivery impact; team burnout",
+      "quick_wins": [
+        {
+          "id": "B1-R04-QW1",
+          "recommendation": "Implement 48-hour cooling period for urgent requests",
+          "owner": "COO",
+          "effort": "1 day",
+          "outcome": "Reduce panic-driven decisions"
+        },
+        {
+          "id": "B1-R04-QW2",
+          "recommendation": "Create prioritization criteria checklist (5 factors)",
+          "owner": "COO + TA",
+          "effort": "4 hours",
+          "outcome": "Objective framework"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B1-R04-S1",
+          "recommendation": "Establish weekly prioritization forum with voting rights",
+          "owner": "COO",
+          "effort": "2 weeks",
+          "outcome": "Structured arbitration"
+        }
+      ]
+    },
+    "B2-R01": {
+      "risk_id": "B2-R01",
+      "risk_name": "Ungoverned TA",
+      "block": 2,
+      "trigger": {
+        "block_status": "red",
+        "description": "Block 2 overall RED"
+      },
+      "severity": "red",
+      "gate_failure": true,
+      "business_impact": "Hiring execution will fail regardless of tools or delivery effort",
+      "quick_wins": [
+        {
+          "id": "B2-R01-QW1",
+          "recommendation": "Document current state process (as-is, not aspirational)",
+          "owner": "TA",
+          "effort": "3 days",
+          "outcome": "Baseline understanding"
+        },
+        {
+          "id": "B2-R01-QW2",
+          "recommendation": "Identify top 3 process bottlenecks from recruiter feedback",
+          "owner": "TA Lead",
+          "effort": "1 day",
+          "outcome": "Focus areas"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B2-R01-S1",
+          "recommendation": "Define TA operating model (centralized/embedded/hybrid)",
+          "owner": "CHRO + TA",
+          "effort": "2 weeks",
+          "outcome": "Structural clarity"
+        },
+        {
+          "id": "B2-R01-S2",
+          "recommendation": "Create TA service catalog with SLAs",
+          "owner": "TA",
+          "effort": "3 weeks",
+          "outcome": "Clear commitments"
+        }
+      ]
+    },
+    "B2-R02": {
+      "risk_id": "B2-R02",
+      "risk_name": "SLA Theatre",
+      "block": 2,
+      "trigger": {
+        "cross_validation": "CV-05",
+        "description": "SLAs claimed but not enforced"
+      },
+      "severity": "force-red",
+      "business_impact": "False expectations; hidden delays; blame-shifting",
+      "quick_wins": [
+        {
+          "id": "B2-R02-QW1",
+          "recommendation": "Audit actual vs. claimed SLA performance (last 30 days)",
+          "owner": "TA Ops",
+          "effort": "1 day",
+          "outcome": "Reality check"
+        },
+        {
+          "id": "B2-R02-QW2",
+          "recommendation": "Reduce SLAs to 3-5 measurable commitments",
+          "owner": "TA Lead",
+          "effort": "4 hours",
+          "outcome": "Focus on what matters"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B2-R02-S1",
+          "recommendation": "Implement SLA dashboard visible to all stakeholders",
+          "owner": "TA + IT",
+          "effort": "2 weeks",
+          "outcome": "Transparency"
+        }
+      ]
+    },
+    "B2-R03": {
+      "risk_id": "B2-R03",
+      "risk_name": "Capacity Blindness",
+      "block": 2,
+      "trigger": {
+        "question": "b2_q5",
+        "condition": "value <= 1",
+        "description": "Recruiter workload not tracked"
+      },
+      "severity": "red",
+      "business_impact": "Overloaded recruiters; quality decline; burnout",
+      "quick_wins": [
+        {
+          "id": "B2-R03-QW1",
+          "recommendation": "Count active roles per recruiter today",
+          "owner": "TA Lead",
+          "effort": "2 hours",
+          "outcome": "Snapshot"
+        },
+        {
+          "id": "B2-R03-QW2",
+          "recommendation": "Define maximum active load benchmark (8-12 roles)",
+          "owner": "TA Lead",
+          "effort": "2 hours",
+          "outcome": "Threshold"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B2-R03-S1",
+          "recommendation": "Build capacity model: roles by complexity × recruiter",
+          "owner": "TA Ops",
+          "effort": "2 weeks",
+          "outcome": "Planning tool"
+        }
+      ]
+    },
+    "B2-R04": {
+      "risk_id": "B2-R04",
+      "risk_name": "Data Chaos",
+      "block": 2,
+      "trigger": {
+        "question": "b2_q6",
+        "condition": "value <= 1",
+        "description": "No single source of truth"
+      },
+      "severity": "red",
+      "business_impact": "Unreliable metrics; duplicated work; missed candidates",
+      "quick_wins": [
+        {
+          "id": "B2-R04-QW1",
+          "recommendation": "Declare ATS as mandatory system of record",
+          "owner": "TA Lead",
+          "effort": "1 hour",
+          "outcome": "Policy clarity"
+        },
+        {
+          "id": "B2-R04-QW2",
+          "recommendation": "Identify and sunset parallel trackers",
+          "owner": "TA Ops",
+          "effort": "3 days",
+          "outcome": "Consolidation"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B2-R04-S1",
+          "recommendation": "Conduct ATS data quality audit",
+          "owner": "TA Ops",
+          "effort": "1 week",
+          "outcome": "Gap identification"
+        }
+      ]
+    },
+    "B3-R01": {
+      "risk_id": "B3-R01",
+      "risk_name": "Interview Bottleneck",
+      "block": 3,
+      "trigger": {
+        "question": "b3_q2",
+        "condition": "value <= 1",
+        "description": "Interviewer availability not planned"
+      },
+      "severity": "red",
+      "business_impact": "Candidates lost to slow process; hiring delays blamed on TA",
+      "quick_wins": [
+        {
+          "id": "B3-R01-QW1",
+          "recommendation": "Identify top 5 interviewers by volume",
+          "owner": "TA + Delivery",
+          "effort": "2 hours",
+          "outcome": "Focus group"
+        },
+        {
+          "id": "B3-R01-QW2",
+          "recommendation": "Block 4 interview slots per week per key interviewer",
+          "owner": "Delivery Lead",
+          "effort": "1 day",
+          "outcome": "Guaranteed capacity"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B3-R01-S1",
+          "recommendation": "Define interviewer pool with capacity commitments",
+          "owner": "Delivery + TA",
+          "effort": "2 weeks",
+          "outcome": "Formal structure"
+        }
+      ]
+    },
+    "B3-R02": {
+      "risk_id": "B3-R02",
+      "risk_name": "Feedback Latency",
+      "block": 3,
+      "trigger": {
+        "question": "b3_q3",
+        "condition": "value <= 1",
+        "description": "Feedback often delayed or missing"
+      },
+      "severity": "red",
+      "business_impact": "Candidates lost; poor employer brand; decision paralysis",
+      "quick_wins": [
+        {
+          "id": "B3-R02-QW1",
+          "recommendation": "Set 24-hour feedback SLA",
+          "owner": "Delivery Lead",
+          "effort": "1 hour",
+          "outcome": "Clear expectation"
+        },
+        {
+          "id": "B3-R02-QW2",
+          "recommendation": "Send automated reminder 4 hours post-interview",
+          "owner": "TA Ops",
+          "effort": "2 hours",
+          "outcome": "Nudge system"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B3-R02-S1",
+          "recommendation": "Implement feedback compliance tracking",
+          "owner": "TA Ops",
+          "effort": "1 week",
+          "outcome": "Accountability"
+        }
+      ]
+    },
+    "B4-R01": {
+      "risk_id": "B4-R01",
+      "risk_name": "Financial Opacity",
+      "block": 4,
+      "trigger": {
+        "question": "b4_q1",
+        "condition": "value <= 1",
+        "description": "No formal TA budget"
+      },
+      "severity": "red",
+      "gate_failure": true,
+      "business_impact": "Uncontrolled spend; surprise costs; inability to scale",
+      "quick_wins": [
+        {
+          "id": "B4-R01-QW1",
+          "recommendation": "List all TA cost components",
+          "owner": "TA + Finance",
+          "effort": "1 day",
+          "outcome": "Cost inventory"
+        },
+        {
+          "id": "B4-R01-QW2",
+          "recommendation": "Calculate current month spend vs. budget",
+          "owner": "Finance",
+          "effort": "4 hours",
+          "outcome": "Baseline"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B4-R01-S1",
+          "recommendation": "Build TA budget template linked to hiring plan",
+          "owner": "Finance + TA",
+          "effort": "2 weeks",
+          "outcome": "Planning tool"
+        }
+      ],
+      "strategic": [
+        {
+          "id": "B4-R01-ST1",
+          "recommendation": "Calculate cost-per-hire by segment",
+          "owner": "Finance + TA",
+          "effort": "Quarterly",
+          "outcome": "Unit economics"
+        }
+      ]
+    },
+    "B5-R01": {
+      "risk_id": "B5-R01",
+      "risk_name": "Evaluation Collapse",
+      "block": 5,
+      "trigger": {
+        "block_status": "red",
+        "description": "Block 5 RED (no SLAs, no standards)"
+      },
+      "severity": "red",
+      "business_impact": "70%+ failure mode for technical hiring; false negatives",
+      "quick_wins": [
+        {
+          "id": "B5-R01-QW1",
+          "recommendation": "Create minimum scorecard template (5 criteria)",
+          "owner": "Engineering Lead",
+          "effort": "4 hours",
+          "outcome": "Structure"
+        },
+        {
+          "id": "B5-R01-QW2",
+          "recommendation": "Train top 5 interviewers on scorecard",
+          "owner": "Engineering Lead",
+          "effort": "1 day",
+          "outcome": "Adoption"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B5-R01-S1",
+          "recommendation": "Define technical interviewer certification program",
+          "owner": "Engineering + HR",
+          "effort": "4 weeks",
+          "outcome": "Quality standard"
+        }
+      ]
+    },
+    "B6-R01": {
+      "risk_id": "B6-R01",
+      "risk_name": "Operational Fragility",
+      "block": 6,
+      "trigger": {
+        "block_status": "red",
+        "description": "Block 6 RED overall"
+      },
+      "severity": "red",
+      "business_impact": "Hero-based execution; unpredictable throughput",
+      "quick_wins": [
+        {
+          "id": "B6-R01-QW1",
+          "recommendation": "Document current hiring process (5-7 stages)",
+          "owner": "TA Ops",
+          "effort": "1 day",
+          "outcome": "Baseline"
+        },
+        {
+          "id": "B6-R01-QW2",
+          "recommendation": "Identify key-person dependencies",
+          "owner": "TA Lead",
+          "effort": "2 hours",
+          "outcome": "Risk map"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B6-R01-S1",
+          "recommendation": "Build process documentation with RACI",
+          "owner": "TA Ops",
+          "effort": "2 weeks",
+          "outcome": "Clarity"
+        }
+      ]
+    },
+    "B6-R03": {
+      "risk_id": "B6-R03",
+      "risk_name": "Key-Person Failure",
+      "block": 6,
+      "trigger": {
+        "question": "b6_q10",
+        "condition": "value == 0",
+        "description": "Work stops when key recruiter absent"
+      },
+      "severity": "critical-red",
+      "business_impact": "Single point of failure; knowledge loss; operational paralysis",
+      "quick_wins": [
+        {
+          "id": "B6-R03-QW1",
+          "recommendation": "Identify all roles with single-owner dependency",
+          "owner": "TA Lead",
+          "effort": "4 hours",
+          "outcome": "Risk map"
+        },
+        {
+          "id": "B6-R03-QW2",
+          "recommendation": "Assign backup for every critical pipeline",
+          "owner": "TA Lead",
+          "effort": "1 day",
+          "outcome": "Immediate coverage"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B6-R03-S1",
+          "recommendation": "Implement buddy system",
+          "owner": "TA Lead",
+          "effort": "2 weeks",
+          "outcome": "Structural resilience"
+        }
+      ]
+    },
+    "B7-R01": {
+      "risk_id": "B7-R01",
+      "risk_name": "Systemic Visibility Failure",
+      "block": 7,
+      "trigger": {
+        "block_status": "red",
+        "description": "Block 7 RED (no reporting, ATS not trusted)"
+      },
+      "severity": "red",
+      "systemic_multiplier": true,
+      "business_impact": "All other block scores unreliable; decisions made blind",
+      "quick_wins": [
+        {
+          "id": "B7-R01-QW1",
+          "recommendation": "Create 1-page weekly hiring report (manual OK)",
+          "owner": "TA Ops",
+          "effort": "1 day",
+          "outcome": "Immediate visibility"
+        },
+        {
+          "id": "B7-R01-QW2",
+          "recommendation": "Define 5 core metrics that matter",
+          "owner": "TA Lead + COO",
+          "effort": "2 hours",
+          "outcome": "Focus"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B7-R01-S1",
+          "recommendation": "Build automated reporting dashboard",
+          "owner": "TA + IT",
+          "effort": "4 weeks",
+          "outcome": "Sustainability"
+        }
+      ]
+    },
+    "B7-R02": {
+      "risk_id": "B7-R02",
+      "risk_name": "Shadow AI",
+      "block": 7,
+      "trigger": {
+        "question": "b7_q6",
+        "condition": "value <= 1",
+        "description": "AI used but not inventoried"
+      },
+      "severity": "force-red",
+      "business_impact": "Compliance risk; bias risk; unknown decision influence",
+      "quick_wins": [
+        {
+          "id": "B7-R02-QW1",
+          "recommendation": "Survey all TA team: What AI tools do you use?",
+          "owner": "TA Lead",
+          "effort": "1 day",
+          "outcome": "Inventory"
+        },
+        {
+          "id": "B7-R02-QW2",
+          "recommendation": "List AI features in current ATS/tools",
+          "owner": "TA Ops",
+          "effort": "4 hours",
+          "outcome": "Awareness"
+        }
+      ],
+      "structural": [
+        {
+          "id": "B7-R02-S1",
+          "recommendation": "Create AI tool inventory and approval process",
+          "owner": "TA + IT + Legal",
+          "effort": "2 weeks",
+          "outcome": "Governance"
+        }
+      ]
+    }
+  },
+  "cross_block_recommendations": {
+    "CROSS-01": {
+      "id": "CROSS-01",
+      "name": "Governance Theatre",
+      "trigger": "Multiple CV contradictions detected",
+      "recommendation": "Conduct reality check: audit what actually happens vs. documented",
+      "owner": "COO + TA",
+      "effort": "1 week"
+    },
+    "CROSS-02": {
+      "id": "CROSS-02",
+      "name": "Mutual Blame Pattern",
+      "trigger": "CV-07 or CV-22 detected",
+      "recommendation": "Establish joint TA-Delivery weekly sync",
+      "owner": "TA Lead + Delivery Lead",
+      "effort": "Ongoing"
+    },
+    "CROSS-03": {
+      "id": "CROSS-03",
+      "name": "Data Fragmentation",
+      "trigger": "B2, B6, B7 data contradictions",
+      "recommendation": "Declare single system of record with executive mandate",
+      "owner": "COO",
+      "effort": "1 week"
+    }
+  },
+  "selection_logic": {
+    "by_severity": {
+      "red": "Start Quick Wins immediately, Structural within 2 weeks",
+      "yellow": "Quick Wins within 2 weeks, Structural as capacity allows",
+      "force-red": "Address immediately, executive escalation required"
+    },
+    "by_resources": {
+      "limited": "Quick Wins only; prioritize Gate blocks (B1, B2, B4)",
+      "moderate": "Quick Wins + 1-2 Structural per block",
+      "full": "Complete roadmap including Strategic"
+    },
+    "by_business_priority": {
+      "revenue_critical": "Prioritize B3, B5 (interview bottleneck, evaluation)",
+      "cost_pressure": "Prioritize B4 (financial governance)",
+      "compliance_risk": "Prioritize B7 (AI, GDPR)",
+      "scale_preparation": "Prioritize B2, B6 (TA leadership, operations)"
+    }
+  }
+}
