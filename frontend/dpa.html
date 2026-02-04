@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Processing Agreement — HiringAudit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --color-primary-900: #0F172A;
+      --color-primary-700: #334155;
+      --color-accent-500: #0891B2;
+      --color-accent-600: #0E7490;
+      --color-bg-primary: #FAFBFC;
+      --color-bg-secondary: #F1F5F9;
+      --color-border-light: #E2E8F0;
+      --color-text-primary: #0F172A;
+      --color-text-secondary: #475569;
+    }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+    }
+    
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 251, 252, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: 16px 0;
+    }
+    
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-primary-900);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--color-accent-500), #22D3EE);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .nav-back {
+      color: var(--color-accent-500);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .nav-back:hover {
+      color: var(--color-accent-600);
+    }
+    
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-primary-900);
+    }
+    
+    .page-meta {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--color-primary-900);
+    }
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--color-primary-700);
+    }
+    
+    p {
+      margin-bottom: 16px;
+      color: var(--color-text-secondary);
+    }
+    
+    ul, ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      color: var(--color-text-secondary);
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    a {
+      color: var(--color-accent-500);
+    }
+    
+    a:hover {
+      color: var(--color-accent-600);
+    }
+    
+    .highlight-box {
+      background: var(--color-bg-secondary);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    
+    .info-box {
+      background: #DBEAFE;
+      border-left: 4px solid #3B82F6;
+      border-radius: 0 12px 12px 0;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    
+    th {
+      background: var(--color-bg-secondary);
+      font-weight: 600;
+      color: var(--color-primary-900);
+    }
+    
+    td {
+      color: var(--color-text-secondary);
+    }
+    
+    .footer {
+      background: var(--color-primary-900);
+      color: #64748B;
+      padding: 48px 24px;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: #64748B;
+      margin: 0 16px;
+    }
+    
+    .footer a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">HA</div>
+        HiringAudit
+      </a>
+      <a href="/" class="nav-back">← Back to Home</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <h1 class="page-title">Data Processing Agreement</h1>
+    <p class="page-meta">Last updated: February 2025 · GDPR Article 28 Compliant</p>
+
+    <div class="info-box">
+      <p style="margin-bottom: 0;"><strong>This DPA applies automatically</strong> when you use HiringAudit services. By purchasing and using the service, you accept this Data Processing Agreement.</p>
+    </div>
+
+    <h2>1. Parties</h2>
+    <ul>
+      <li><strong>Data Controller:</strong> You (the Client purchasing the audit)</li>
+      <li><strong>Data Processor:</strong> HiringAudit (us)</li>
+    </ul>
+
+    <h2>2. Definitions</h2>
+    <ul>
+      <li><strong>GDPR:</strong> General Data Protection Regulation (EU) 2016/679</li>
+      <li><strong>Personal Data:</strong> Any information relating to an identified or identifiable natural person</li>
+      <li><strong>Processing:</strong> Any operation performed on Personal Data</li>
+      <li><strong>Sub-processor:</strong> Third party engaged by us to process Personal Data</li>
+      <li><strong>Data Subject:</strong> The individual whose Personal Data is processed</li>
+    </ul>
+
+    <h2>3. Subject Matter and Details</h2>
+    <div class="highlight-box">
+      <p><strong>Purpose:</strong> Provision of hiring audit diagnostic services</p>
+      <p><strong>Duration:</strong> Duration of service agreement plus 90 days</p>
+      <p><strong>Data Subjects:</strong> Client employees, contractors, and representatives</p>
+      <p style="margin-bottom: 0;"><strong>Data Types:</strong> Name, email, job title, questionnaire responses, IP address, timestamps</p>
+    </div>
+
+    <h2>4. Processor Obligations</h2>
+    <p>As your Data Processor, we will:</p>
+    <ol>
+      <li>Process Personal Data only on your documented instructions</li>
+      <li>Ensure personnel are bound by confidentiality obligations</li>
+      <li>Implement appropriate technical and organizational security measures</li>
+      <li>Obtain your authorization before engaging Sub-processors</li>
+      <li>Assist you in responding to Data Subject requests</li>
+      <li>Assist you in meeting GDPR compliance obligations</li>
+      <li>Delete or return all Personal Data upon termination</li>
+      <li>Make available information to demonstrate compliance</li>
+    </ol>
+
+    <h2>5. Security Measures</h2>
+    
+    <h3>Technical Measures</h3>
+    <ul>
+      <li>TLS 1.2+ encryption for data in transit</li>
+      <li>AES-256 encryption for data at rest</li>
+      <li>Multi-factor authentication for system access</li>
+      <li>Regular security patching</li>
+      <li>Intrusion detection systems</li>
+      <li>Automated backups with encryption</li>
+    </ul>
+
+    <h3>Organizational Measures</h3>
+    <ul>
+      <li>Role-based access control (RBAC)</li>
+      <li>Employee security training</li>
+      <li>Confidentiality agreements</li>
+      <li>Security policies and procedures</li>
+      <li>Incident response plan</li>
+    </ul>
+
+    <h2>6. Sub-processors</h2>
+    <p>You provide general authorization for us to engage Sub-processors. Current Sub-processors:</p>
+    <table>
+      <tr>
+        <th>Sub-processor</th>
+        <th>Purpose</th>
+        <th>Location</th>
+        <th>Safeguards</th>
+      </tr>
+      <tr>
+        <td>Vercel</td>
+        <td>Website hosting</td>
+        <td>USA / Global</td>
+        <td>SCCs / DPF</td>
+      </tr>
+      <tr>
+        <td>Stripe</td>
+        <td>Payment processing</td>
+        <td>USA</td>
+        <td>DPF Certified</td>
+      </tr>
+      <tr>
+        <td>Google Analytics</td>
+        <td>Website analytics</td>
+        <td>USA</td>
+        <td>SCCs / DPF</td>
+      </tr>
+    </table>
+    <p>We will notify you of any changes to Sub-processors with 30 days notice.</p>
+
+    <h2>7. International Transfers</h2>
+    <p>When transferring Personal Data outside the EEA, we rely on:</p>
+    <ul>
+      <li>Standard Contractual Clauses (SCCs)</li>
+      <li>Adequacy decisions by the European Commission</li>
+      <li>Data Privacy Framework (DPF) certification</li>
+    </ul>
+
+    <h2>8. Data Breach Notification</h2>
+    <p>In the event of a Personal Data breach, we will:</p>
+    <ul>
+      <li>Notify you within <strong>48 hours</strong> of becoming aware</li>
+      <li>Provide details including: nature of breach, categories of data affected, approximate number of data subjects, likely consequences, and measures taken</li>
+    </ul>
+
+    <h2>9. Data Subject Rights</h2>
+    <p>We will assist you in fulfilling Data Subject requests for:</p>
+    <ul>
+      <li>Access to their Personal Data</li>
+      <li>Rectification of inaccurate data</li>
+      <li>Erasure ("right to be forgotten")</li>
+      <li>Restriction of processing</li>
+      <li>Data portability</li>
+      <li>Objection to processing</li>
+    </ul>
+
+    <h2>10. Audit Rights</h2>
+    <p>You have the right to audit our compliance with this DPA. Audits will be conducted with reasonable notice and during normal business hours.</p>
+
+    <h2>11. Termination</h2>
+    <p>Upon termination of services, we will:</p>
+    <ul>
+      <li>Delete all Personal Data within 30 days, or</li>
+      <li>Return all Personal Data to you upon request</li>
+      <li>Provide written certification of deletion</li>
+    </ul>
+
+    <h2>12. Liability</h2>
+    <p>Liability under this DPA is subject to the limitations in our Terms of Service, except for breaches of GDPR obligations which shall be governed by applicable law.</p>
+
+    <h2>13. Contact</h2>
+    <div class="highlight-box">
+      <p><strong>For DPA-related inquiries:</strong></p>
+      <p style="margin-bottom: 0;"><strong>Email:</strong> <a href="mailto:privacy@hiringaudit.com">privacy@hiringaudit.com</a></p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 HiringAudit. All rights reserved.</p>
+    <p style="margin-top: 16px;">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/dpa">DPA</a>
+    </p>
+  </footer>
+</body>
+</html>

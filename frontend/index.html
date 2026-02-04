@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hiring Audit — Diagnose Your Hiring Execution</title>
+  <meta name="description" content="Independent diagnostic that reveals where your hiring system is broken. Get actionable insights across 7 dimensions of hiring health.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  
+  <style>
+    /* ===== CSS RESET & VARIABLES ===== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      /* Colors */
+      --color-primary-900: #0F172A;
+      --color-primary-800: #1E293B;
+      --color-primary-700: #334155;
+      --color-primary-600: #475569;
+      --color-primary-500: #64748B;
+      
+      --color-accent-600: #0E7490;
+      --color-accent-500: #0891B2;
+      --color-accent-400: #22D3EE;
+      --color-accent-300: #67E8F9;
+      
+      --color-bg-primary: #FAFBFC;
+      --color-bg-secondary: #F1F5F9;
+      --color-bg-tertiary: #E2E8F0;
+      --color-bg-dark: #0F172A;
+      
+      --color-status-green: #10B981;
+      --color-status-green-bg: #D1FAE5;
+      --color-status-yellow: #F59E0B;
+      --color-status-yellow-bg: #FEF3C7;
+      --color-status-red: #EF4444;
+      --color-status-red-bg: #FEE2E2;
+      
+      --color-text-primary: #0F172A;
+      --color-text-secondary: #475569;
+      --color-text-muted: #94A3B8;
+      --color-text-inverse: #FFFFFF;
+      
+      --color-border-light: #E2E8F0;
+      --color-border-medium: #CBD5E1;
+      
+      /* Typography */
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-heading: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-body: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      /* Spacing */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      
+      /* Misc */
+      --radius-sm: 6px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+      --radius-xl: 16px;
+      --radius-full: 9999px;
+      
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1);
+      --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1), 0 8px 10px -6px rgba(0,0,0,0.1);
+      
+      --transition: all 0.2s ease;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== UTILITIES ===== */
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    .section {
+      padding: var(--space-20) 0;
+    }
+
+    .section-dark {
+      background: var(--color-bg-dark);
+      color: var(--color-text-inverse);
+    }
+
+    .text-center { text-align: center; }
+    .text-muted { color: var(--color-text-muted); }
+    .text-accent { color: var(--color-accent-500); }
+
+    /* ===== NAVIGATION ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 251, 252, 0.9);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: var(--space-4) 0;
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-primary-900);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--color-accent-500), var(--color-accent-400));
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9375rem;
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--color-accent-500);
+    }
+
+    .nav-cta {
+      background: var(--color-accent-500);
+      color: white !important;
+      padding: var(--space-2) var(--space-5);
+      border-radius: var(--radius-md);
+    }
+
+    .nav-cta:hover {
+      background: var(--color-accent-600);
+      color: white !important;
+    }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-primary-900);
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: block; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: calc(var(--space-24) + 80px) 0 var(--space-20);
+      background: linear-gradient(180deg, var(--color-bg-primary) 0%, var(--color-bg-secondary) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(8, 145, 178, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(8, 145, 178, 0.05) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      background: rgba(8, 145, 178, 0.1);
+      color: var(--color-accent-600);
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title span {
+      color: var(--color-accent-500);
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-8);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: var(--space-12);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: var(--transition);
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-accent-500);
+      color: white;
+      box-shadow: var(--shadow-md), 0 0 0 0 rgba(8, 145, 178, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--color-accent-600);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg), 0 0 20px rgba(8, 145, 178, 0.3);
+    }
+
+    .btn-secondary {
+      background: white;
+      color: var(--color-primary-800);
+      border: 2px solid var(--color-border-medium);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-accent-500);
+      color: var(--color-accent-500);
+    }
+
+    /* Hero Visual */
+    .hero-visual {
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: var(--shadow-xl), 0 0 60px rgba(8, 145, 178, 0.15);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .hero-visual-inner {
+      background: white;
+      padding: var(--space-6);
+    }
+
+    .dashboard-preview {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+
+    .block-indicator {
+      aspect-ratio: 1;
+      border-radius: var(--radius-md);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: white;
+      gap: var(--space-1);
+    }
+
+    .block-indicator.green { background: var(--color-status-green); }
+    .block-indicator.yellow { background: var(--color-status-yellow); }
+    .block-indicator.red { background: var(--color-status-red); }
+
+    .score-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-8);
+      padding: var(--space-4);
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-md);
+    }
+
+    .score-item {
+      text-align: center;
+    }
+
+    .score-label {
+      font-size: 0.75rem;
+      color: var(--color-text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-1);
+    }
+
+    .score-value {
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .score-value.yellow { color: var(--color-status-yellow); }
+
+    /* ===== SOCIAL PROOF ===== */
+    .social-proof {
+      padding: var(--space-12) 0;
+      background: white;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .social-proof-text {
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: 0.875rem;
+      margin-bottom: var(--space-6);
+    }
+
+    .logo-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-12);
+      flex-wrap: wrap;
+      opacity: 0.5;
+    }
+
+    .logo-placeholder {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-primary-700);
+    }
+
+    /* ===== PROBLEM SECTION ===== */
+    .problem {
+      background: white;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto var(--space-12);
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-accent-500);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 400;
+      margin-bottom: var(--space-4);
+      letter-spacing: -0.02em;
+    }
+
+    .section-subtitle {
+      font-size: 1.125rem;
+      color: var(--color-text-secondary);
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .problem-card {
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      border: 1px solid transparent;
+      transition: var(--transition);
+    }
+
+    .problem-card:hover {
+      border-color: var(--color-status-red);
+      transform: translateY(-4px);
+    }
+
+    .problem-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--color-status-red-bg);
+      color: var(--color-status-red);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .problem-title {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .problem-desc {
+      color: var(--color-text-secondary);
+      font-size: 0.9375rem;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      background: var(--color-bg-secondary);
+    }
+
+    .steps-container {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .steps-container::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 60px;
+      right: 60px;
+      height: 2px;
+      background: var(--color-border-medium);
+    }
+
+    .step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .step-number {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+      border: 3px solid var(--color-accent-500);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+      color: var(--color-accent-500);
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 1.125rem;
+      margin-bottom: var(--space-2);
+    }
+
+    .step-desc {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+      max-width: 180px;
+    }
+
+    @media (max-width: 768px) {
+      .steps-container {
+        flex-direction: column;
+        gap: var(--space-8);
+      }
+      .steps-container::before {
+        top: 0;
+        bottom: 0;
+        left: 40px;
+        right: auto;
+        width: 2px;
+        height: auto;
+      }
+      .step {
+        flex-direction: row;
+        text-align: left;
+        gap: var(--space-6);
+      }
+      .step-number {
+        flex-shrink: 0;
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    /* ===== BLOCKS SECTION ===== */
+    .blocks {
+      background: white;
+    }
+
+    .blocks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .block-card {
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      display: flex;
+      gap: var(--space-4);
+      align-items: flex-start;
+      border: 2px solid transparent;
+      transition: var(--transition);
+    }
+
+    .block-card:hover {
+      border-color: var(--color-accent-500);
+      background: white;
+    }
+
+    .block-number {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--radius-md);
+      background: var(--color-accent-500);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.125rem;
+      flex-shrink: 0;
+    }
+
+    .block-content h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: var(--space-1);
+    }
+
+    .block-content p {
+      font-size: 0.875rem;
+      color: var(--color-text-secondary);
+    }
+
+    /* ===== PRICING ===== */
+    .pricing {
+      background: var(--color-bg-secondary);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .pricing-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      border: 2px solid var(--color-border-light);
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+    }
+
+    .pricing-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .pricing-card.featured {
+      border-color: var(--color-accent-500);
+      position: relative;
+    }
+
+    .pricing-card.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--color-accent-500);
+      color: white;
+      padding: var(--space-1) var(--space-4);
+      border-radius: var(--radius-full);
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .pricing-tier {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--color-accent-500);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-2);
+    }
+
+    .pricing-name {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-price {
+      font-family: var(--font-mono);
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: var(--space-2);
+    }
+
+    .pricing-price span {
+      font-size: 1rem;
+      color: var(--color-text-muted);
+      font-weight: 400;
+    }
+
+    .pricing-desc {
+      color: var(--color-text-secondary);
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .pricing-features {
+      list-style: none;
+      margin-bottom: var(--space-8);
+      flex-grow: 1;
+    }
+
+    .pricing-features li {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      font-size: 0.9375rem;
+    }
+
+    .pricing-features li i {
+      color: var(--color-status-green);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .pricing-card .btn {
+      width: 100%;
+    }
+
+    /* ===== FAQ ===== */
+    .faq {
+      background: white;
+    }
+
+    .faq-list {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--color-border-light);
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-6) 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-heading);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      transition: var(--transition);
+    }
+
+    .faq-question:hover {
+      color: var(--color-accent-500);
+    }
+
+    .faq-question i {
+      transition: var(--transition);
+    }
+
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 500px;
+    }
+
+    .faq-answer-inner {
+      padding-bottom: var(--space-6);
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta {
+      background: linear-gradient(135deg, var(--color-primary-900) 0%, var(--color-primary-800) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 30% 70%, rgba(8, 145, 178, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 70% 30%, rgba(8, 145, 178, 0.15) 0%, transparent 40%);
+      pointer-events: none;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-subtitle {
+      font-size: 1.125rem;
+      color: var(--color-primary-500);
+      margin-bottom: var(--space-8);
+    }
+
+    .cta .btn-primary {
+      background: var(--color-accent-400);
+      color: var(--color-primary-900);
+      font-size: 1.125rem;
+      padding: var(--space-5) var(--space-10);
+    }
+
+    .cta .btn-primary:hover {
+      background: var(--color-accent-300);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--color-bg-dark);
+      color: var(--color-primary-500);
+      padding: var(--space-16) 0 var(--space-8);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr repeat(3, 1fr);
+      gap: var(--space-12);
+      margin-bottom: var(--space-12);
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-8);
+      }
+    }
+
+    .footer-brand p {
+      margin-top: var(--space-4);
+      font-size: 0.9375rem;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      color: white;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: var(--space-2);
+    }
+
+    .footer-col a {
+      color: var(--color-primary-500);
+      text-decoration: none;
+      font-size: 0.9375rem;
+      transition: var(--transition);
+    }
+
+    .footer-col a:hover {
+      color: white;
+    }
+
+    .footer-bottom {
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-primary-700);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      font-size: 0.875rem;
+    }
+
+    .footer-legal {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .footer-legal a {
+      color: var(--color-primary-500);
+      text-decoration: none;
+    }
+
+    .footer-legal a:hover {
+      color: white;
+    }
+
+    /* ===== REPORT PREVIEW SECTION ===== */
+    .report-preview {
+      background: var(--color-bg-secondary);
+    }
+
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+
+    .preview-card {
+      background: white;
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      border: 2px solid var(--color-border-light);
+      text-align: center;
+    }
+
+    .preview-card.featured {
+      border-color: var(--color-accent-500);
+    }
+
+    .preview-tier {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-accent-500);
+      margin-bottom: var(--space-2);
+    }
+
+    .preview-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: var(--space-5);
+      color: var(--color-primary-900);
+    }
+
+    .preview-samples {
+      display: flex;
+      gap: var(--space-3);
+      justify-content: center;
+      margin-bottom: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    .preview-thumb {
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      padding: 0;
+    }
+
+    .preview-image {
+      width: 100px;
+      height: 130px;
+      background: var(--color-bg-secondary);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .preview-thumb:hover .preview-image {
+      border-color: var(--color-accent-500);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .preview-placeholder {
+      padding: var(--space-3);
+      width: 100%;
+    }
+
+    .redacted-line {
+      height: 6px;
+      background: var(--color-border-medium);
+      border-radius: 3px;
+      margin-bottom: var(--space-2);
+    }
+    .redacted-line.w90 { width: 90%; }
+    .redacted-line.w85 { width: 85%; }
+    .redacted-line.w80 { width: 80%; }
+    .redacted-line.w70 { width: 70%; }
+    .redacted-line.w60 { width: 60%; }
+    .redacted-line.w50 { width: 50%; }
+    .redacted-line.w40 { width: 40%; }
+
+    .redacted-block {
+      height: 30px;
+      background: var(--color-bg-tertiary);
+      border-radius: var(--radius-sm);
+      margin: var(--space-2) 0;
+    }
+
+    .heatmap-row {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 4px;
+      justify-content: center;
+    }
+
+    .heatmap-cell {
+      width: 18px;
+      height: 18px;
+      border-radius: 3px;
+    }
+    .heatmap-cell.green { background: var(--color-status-green); opacity: 0.7; }
+    .heatmap-cell.yellow { background: var(--color-status-yellow); opacity: 0.7; }
+    .heatmap-cell.red { background: var(--color-status-red); opacity: 0.7; }
+
+    .reco-header {
+      height: 8px;
+      width: 50%;
+      background: var(--color-accent-500);
+      border-radius: 4px;
+      margin-bottom: var(--space-2);
+      opacity: 0.5;
+    }
+
+    .reco-tag {
+      height: 12px;
+      width: 40px;
+      background: var(--color-status-green-bg);
+      border-radius: 6px;
+      margin-top: var(--space-2);
+    }
+
+    .priority-item {
+      height: 14px;
+      border-radius: 4px;
+      margin-bottom: var(--space-2);
+    }
+    .priority-item.high { background: var(--color-status-red); width: 85%; opacity: 0.6; }
+    .priority-item.med { background: var(--color-status-yellow); width: 70%; opacity: 0.6; }
+    .priority-item.low { background: var(--color-status-green); width: 55%; opacity: 0.6; }
+
+    .roadmap-phase {
+      height: 20px;
+      background: linear-gradient(90deg, var(--color-accent-500) 0%, var(--color-accent-300) 100%);
+      border-radius: 4px;
+      margin-bottom: var(--space-2);
+      opacity: 0.5;
+    }
+    .roadmap-phase:nth-child(1) { width: 100%; }
+    .roadmap-phase:nth-child(2) { width: 70%; }
+    .roadmap-phase:nth-child(3) { width: 40%; }
+
+    .preview-watermark {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      font-size: 6px;
+      font-weight: 700;
+      color: var(--color-status-red);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .preview-label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    .preview-btn {
+      font-size: 0.875rem;
+    }
+
+    .preview-note {
+      text-align: center;
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* ===== PREVIEW MODAL / LIGHTBOX ===== */
+    .preview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(15, 23, 42, 0.8);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+    }
+
+    .preview-modal.active {
+      display: flex;
+    }
+
+    .preview-modal-content {
+      background: white;
+      border-radius: var(--radius-xl);
+      max-width: 700px;
+      width: 100%;
+      max-height: 85vh;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .preview-modal-close {
+      position: absolute;
+      top: var(--space-4);
+      right: var(--space-4);
+      background: var(--color-bg-secondary);
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      z-index: 10;
+      transition: var(--transition);
+    }
+
+    .preview-modal-close:hover {
+      background: var(--color-bg-tertiary);
+      color: var(--color-text-primary);
+    }
+
+    .preview-modal-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--color-border-light);
+      text-align: center;
+    }
+
+    .preview-modal-badge {
+      display: inline-block;
+      background: var(--color-status-red-bg);
+      color: #991B1B;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-3);
+      letter-spacing: 0.05em;
+    }
+
+    .preview-modal-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-primary-900);
+    }
+
+    .preview-modal-body {
+      padding: var(--space-6);
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .preview-modal-footer {
+      padding: var(--space-5) var(--space-6);
+      border-top: 1px solid var(--color-border-light);
+      background: var(--color-bg-secondary);
+      text-align: center;
+    }
+
+    .preview-modal-footer p {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Preview content styles */
+    .preview-section {
+      margin-bottom: var(--space-6);
+    }
+
+    .preview-section-title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-3);
+    }
+
+    .preview-block {
+      background: var(--color-bg-secondary);
+      border-radius: var(--radius-md);
+      padding: var(--space-5);
+      position: relative;
+    }
+
+    .preview-block::after {
+      content: 'REDACTED';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-15deg);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-status-red);
+      opacity: 0.15;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .preview-redacted-text {
+      height: 12px;
+      background: var(--color-border-medium);
+      border-radius: 6px;
+      margin-bottom: var(--space-3);
+    }
+
+    .preview-heatmap-large {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: var(--space-2);
+      margin-bottom: var(--space-4);
+    }
+
+    .preview-heatmap-cell {
+      aspect-ratio: 1;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-in {
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+    .delay-4 { animation-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">
+          <i data-lucide="activity" style="width: 18px; height: 18px;"></i>
+        </div>
+        HiringAudit
+      </a>
+      <ul class="nav-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#blocks">What We Audit</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="/checkout" class="nav-cta">Start Audit</a></li>
+      </ul>
+      <button class="nav-toggle">
+        <i data-lucide="menu" style="width: 24px; height: 24px;"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i data-lucide="zap" style="width: 14px; height: 14px;"></i>
+          Independent Hiring Diagnostic
+        </div>
+        <h1 class="hero-title">
+          Your hiring is broken.<br>
+          <span>We'll show you where.</span>
+        </h1>
+        <p class="hero-subtitle">
+          The only diagnostic that audits hiring as a business system — not just recruitment metrics. 
+          Get clarity on what's actually failing in 7 dimensions.
+        </p>
+        <div class="hero-buttons">
+          <a href="/checkout" class="btn btn-primary">
+            Start Free Diagnostic
+            <i data-lucide="arrow-right" style="width: 18px; height: 18px;"></i>
+          </a>
+          <a href="#preview" class="btn btn-secondary">
+            See Report Format
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-visual-inner">
+          <div class="dashboard-preview">
+            <div class="block-indicator green">
+              <i data-lucide="crown" style="width: 20px; height: 20px;"></i>
+              B1
+            </div>
+            <div class="block-indicator yellow">
+              <i data-lucide="users" style="width: 20px; height: 20px;"></i>
+              B2
+            </div>
+            <div class="block-indicator red">
+              <i data-lucide="truck" style="width: 20px; height: 20px;"></i>
+              B3
+            </div>
+            <div class="block-indicator green">
+              <i data-lucide="wallet" style="width: 20px; height: 20px;"></i>
+              B4
+            </div>
+            <div class="block-indicator yellow">
+              <i data-lucide="code" style="width: 20px; height: 20px;"></i>
+              B5
+            </div>
+            <div class="block-indicator yellow">
+              <i data-lucide="cog" style="width: 20px; height: 20px;"></i>
+              B6
+            </div>
+            <div class="block-indicator green">
+              <i data-lucide="bar-chart-2" style="width: 20px; height: 20px;"></i>
+              B7
+            </div>
+          </div>
+          <div class="score-display">
+            <div class="score-item">
+              <div class="score-label">Overall Status</div>
+              <div class="score-value yellow">YELLOW</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Confidence</div>
+              <div class="score-value">72/100</div>
+            </div>
+            <div class="score-item">
+              <div class="score-label">Critical Issues</div>
+              <div class="score-value" style="color: var(--color-status-red);">3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof -->
+  <section class="social-proof">
+    <div class="container">
+      <p class="social-proof-text">Trusted by hiring leaders at forward-thinking companies</p>
+      <div class="logo-grid">
+        <span class="logo-placeholder">TechCorp</span>
+        <span class="logo-placeholder">ScaleUp</span>
+        <span class="logo-placeholder">GrowthCo</span>
+        <span class="logo-placeholder">InnovateLab</span>
+        <span class="logo-placeholder">FutureTech</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Section -->
+  <section class="section problem">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">The Problem</span>
+        <h2 class="section-title">The hiring problems you can't see</h2>
+        <p class="section-subtitle">
+          Your ATS shows green dashboards while hiring silently destroys revenue, delivery, and growth.
+        </p>
+      </div>
+
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-icon">
+            <i data-lucide="eye-off" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="problem-title">Invisible Ownership Gaps</h3>
+          <p class="problem-desc">
+            Everyone assumes someone owns hiring. No one actually does. 
+            Decisions drift, priorities clash, and accountability vanishes.
+          </p>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-icon">
+            <i data-lucide="message-square-x" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="problem-title">Cross-Function Blame</h3>
+          <p class="problem-desc">
+            TA blames Delivery. Delivery blames TA. Finance wonders where the money went.
+            The truth hides in the contradictions.
+          </p>
+        </div>
+
+        <div class="problem-card">
+          <div class="problem-icon">
+            <i data-lucide="clock" style="width: 24px; height: 24px;"></i>
+          </div>
+          <h3 class="problem-title">Silent Bottlenecks</h3>
+          <p class="problem-desc">
+            Interview capacity, feedback delays, and SLA violations compound invisibly 
+            until entire pipelines collapse.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section how-it-works" id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">Four steps to clarity</h2>
+        <p class="section-subtitle">
+          A structured diagnostic that takes 30 minutes per respondent and delivers executive-ready insights.
+        </p>
+      </div>
+
+      <div class="steps-container">
+        <div class="step">
+          <div class="step-number">
+            <i data-lucide="settings" style="width: 32px; height: 32px;"></i>
+          </div>
+          <div>
+            <div class="step-title">Configure</div>
+            <p class="step-desc">Tell us about your company and select respondents</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">
+            <i data-lucide="clipboard-list" style="width: 32px; height: 32px;"></i>
+          </div>
+          <div>
+            <div class="step-title">Answer</div>
+            <p class="step-desc">Each role completes their audit block (10-15 min)</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">
+            <i data-lucide="cpu" style="width: 32px; height: 32px;"></i>
+          </div>
+          <div>
+            <div class="step-title">Analyze</div>
+            <p class="step-desc">We cross-validate, score, and detect contradictions</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-number">
+            <i data-lucide="file-text" style="width: 32px; height: 32px;"></i>
+          </div>
+          <div>
+            <div class="step-title">Report</div>
+            <p class="step-desc">Get your diagnostic with actionable recommendations</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audit Blocks -->
+  <section class="section blocks" id="blocks">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">The Framework</span>
+        <h2 class="section-title">7 dimensions of hiring health</h2>
+        <p class="section-subtitle">
+          Each block examines a critical layer of your hiring system. 
+          Cross-validation between blocks reveals what single perspectives hide.
+        </p>
+      </div>
+
+      <div class="blocks-grid">
+        <div class="block-card">
+          <div class="block-number">1</div>
+          <div class="block-content">
+            <h3>Executive Ownership</h3>
+            <p>Is hiring owned at the business level or delegated without accountability?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">2</div>
+          <div class="block-content">
+            <h3>TA Leadership</h3>
+            <p>Can your talent acquisition team execute with capacity, SLAs, and process discipline?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">3</div>
+          <div class="block-content">
+            <h3>Delivery & Hiring</h3>
+            <p>Do delivery teams enable or obstruct hiring through capacity and feedback?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">4</div>
+          <div class="block-content">
+            <h3>Financial Governance</h3>
+            <p>Is hiring spend visible, planned, and tied to business outcomes?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">5</div>
+          <div class="block-content">
+            <h3>Technical Interviewing</h3>
+            <p>Is evaluation structured, accountable, and operating within SLAs?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">6</div>
+          <div class="block-content">
+            <h3>Recruitment Operations</h3>
+            <p>Does recruitment run as a stable system or depend on heroics?</p>
+          </div>
+        </div>
+        <div class="block-card">
+          <div class="block-number">7</div>
+          <div class="block-content">
+            <h3>Reporting & AI</h3>
+            <p>Is your data trustworthy and is AI governed or running wild?</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section pricing" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Pricing</span>
+        <h2 class="section-title">Choose your diagnostic depth</h2>
+        <p class="section-subtitle">
+          All tiers include the full 7-block audit framework with cross-validation.
+        </p>
+      </div>
+
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <div class="pricing-tier">Level 1</div>
+          <div class="pricing-name">Diagnostic</div>
+          <div class="pricing-price">$499 <span>one-time</span></div>
+          <p class="pricing-desc">
+            Clear visibility into your hiring system's health and critical risks.
+          </p>
+          <ul class="pricing-features">
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Full 7-block assessment
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Cross-validation analysis
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Risk heatmap & status indicators
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Gate failure identification
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Executive PDF report
+            </li>
+          </ul>
+          <a href="/checkout" class="btn btn-secondary">Get Started</a>
+        </div>
+
+        <div class="pricing-card featured">
+          <div class="pricing-tier">Level 2</div>
+          <div class="pricing-name">Diagnostic + Design</div>
+          <div class="pricing-price">$1,499 <span>one-time</span></div>
+          <p class="pricing-desc">
+            Everything in Level 1, plus actionable fix recommendations.
+          </p>
+          <ul class="pricing-features">
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Everything in Level 1
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Prioritized quick wins (Week 1-2)
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Structural change roadmap
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Root cause analysis
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              30-minute results walkthrough call
+            </li>
+          </ul>
+          <a href="/checkout" class="btn btn-primary">Get Started</a>
+        </div>
+
+        <div class="pricing-card">
+          <div class="pricing-tier">Level 3</div>
+          <div class="pricing-name">Full Assessment</div>
+          <div class="pricing-price">Custom</div>
+          <p class="pricing-desc">
+            Diagnostic + Design + hands-on implementation support.
+          </p>
+          <ul class="pricing-features">
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Everything in Level 2
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              90-day implementation roadmap
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Weekly advisory calls
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Process design support
+            </li>
+            <li>
+              <i data-lucide="check" style="width: 18px; height: 18px;"></i>
+              Executive stakeholder alignment
+            </li>
+          </ul>
+          <a href="mailto:hello@hiringaudit.com" class="btn btn-secondary">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Report Preview Section -->
+  <section class="section report-preview" id="preview">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">What You Will Receive</span>
+        <h2 class="section-title">Report format preview</h2>
+        <p class="section-subtitle">
+          Each service level delivers a structured diagnostic output. 
+          Below are redacted examples of what your report will include.
+        </p>
+      </div>
+
+      <div class="preview-grid">
+        <!-- Level 1 Preview -->
+        <div class="preview-card">
+          <div class="preview-tier">Level 1 — Diagnostic</div>
+          <h3 class="preview-title">Executive Risk Report</h3>
+          <div class="preview-samples">
+            <button class="preview-thumb" onclick="openPreview('l1-summary')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="redacted-line w80"></div>
+                  <div class="redacted-line w60"></div>
+                  <div class="redacted-block"></div>
+                  <div class="redacted-line w40"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Executive Summary</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l1-heatmap')">
+              <div class="preview-image">
+                <div class="preview-placeholder heatmap">
+                  <div class="heatmap-row">
+                    <div class="heatmap-cell green"></div>
+                    <div class="heatmap-cell yellow"></div>
+                    <div class="heatmap-cell red"></div>
+                    <div class="heatmap-cell green"></div>
+                  </div>
+                  <div class="heatmap-row">
+                    <div class="heatmap-cell yellow"></div>
+                    <div class="heatmap-cell yellow"></div>
+                    <div class="heatmap-cell green"></div>
+                  </div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Risk Heatmap</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l1-insight')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="redacted-line w90"></div>
+                  <div class="redacted-line w70"></div>
+                  <div class="redacted-line w85"></div>
+                  <div class="redacted-line w50"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Key Insight Example</span>
+            </button>
+          </div>
+          <button class="btn btn-ghost preview-btn" onclick="openPreview('l1-full')">
+            View Sample (Redacted)
+          </button>
+        </div>
+
+        <!-- Level 2 Preview -->
+        <div class="preview-card featured">
+          <div class="preview-tier">Level 2 — Diagnostic + Design</div>
+          <h3 class="preview-title">Risk Report + Recommendations</h3>
+          <div class="preview-samples">
+            <button class="preview-thumb" onclick="openPreview('l2-summary')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="redacted-line w80"></div>
+                  <div class="redacted-line w60"></div>
+                  <div class="redacted-block"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Risk Summary</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l2-reco')">
+              <div class="preview-image">
+                <div class="preview-placeholder reco">
+                  <div class="reco-header"></div>
+                  <div class="redacted-line w90"></div>
+                  <div class="redacted-line w70"></div>
+                  <div class="reco-tag"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Recommendation Block</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l2-priority')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="priority-item high"></div>
+                  <div class="priority-item med"></div>
+                  <div class="priority-item low"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Priority Actions</span>
+            </button>
+          </div>
+          <button class="btn btn-secondary preview-btn" onclick="openPreview('l2-full')">
+            View Sample (Redacted)
+          </button>
+        </div>
+
+        <!-- Level 3 Preview -->
+        <div class="preview-card">
+          <div class="preview-tier">Level 3 — Full Assessment</div>
+          <h3 class="preview-title">Complete Package + Roadmap</h3>
+          <div class="preview-samples">
+            <button class="preview-thumb" onclick="openPreview('l3-summary')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="redacted-line w80"></div>
+                  <div class="redacted-block"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Risk Summary</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l3-roadmap')">
+              <div class="preview-image">
+                <div class="preview-placeholder roadmap">
+                  <div class="roadmap-phase"></div>
+                  <div class="roadmap-phase"></div>
+                  <div class="roadmap-phase"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Roadmap Snapshot</span>
+            </button>
+            <button class="preview-thumb" onclick="openPreview('l3-engage')">
+              <div class="preview-image">
+                <div class="preview-placeholder">
+                  <div class="redacted-line w70"></div>
+                  <div class="redacted-line w50"></div>
+                  <div class="redacted-line w80"></div>
+                </div>
+                <div class="preview-watermark">SAMPLE – REDACTED</div>
+              </div>
+              <span class="preview-label">Engagement Model</span>
+            </button>
+          </div>
+          <button class="btn btn-ghost preview-btn" onclick="openPreview('l3-full')">
+            View Sample (Redacted)
+          </button>
+        </div>
+      </div>
+
+      <p class="preview-note">
+        All samples shown are redacted for confidentiality. 
+        Your report will contain complete analysis specific to your organization.
+      </p>
+    </div>
+  </section>
+
+  <!-- Preview Modal / Lightbox -->
+  <div class="preview-modal" id="previewModal">
+    <div class="preview-modal-content">
+      <button class="preview-modal-close" onclick="closePreview()">×</button>
+      <div class="preview-modal-header">
+        <span class="preview-modal-badge">SAMPLE REPORT – REDACTED</span>
+        <h3 class="preview-modal-title" id="previewTitle">Executive Risk Summary</h3>
+      </div>
+      <div class="preview-modal-body" id="previewBody">
+        <!-- Dynamic content loaded here -->
+      </div>
+      <div class="preview-modal-footer">
+        <p>This is a redacted sample. Your report will contain complete analysis.</p>
+        <a href="#pricing" class="btn btn-primary" onclick="closePreview()">Get Your Audit</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <section class="section faq" id="faq">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">FAQ</span>
+        <h2 class="section-title">Common questions</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            How is this different from HR consulting?
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              We don't consult — we diagnose. HR consultants often rely on interviews and subjective assessments. 
+              Our system uses structured data from multiple roles and cross-validates responses to surface contradictions 
+              and systemic issues that interviews miss. We identify what's broken; you decide how to fix it.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Who needs to participate in the audit?
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Typically: CEO/COO (executive ownership), Head of TA (talent acquisition), Head of Delivery/Engineering 
+              (hiring manager perspective), and CFO or Finance lead (budget governance). Each person completes their 
+              relevant block(s) independently — about 10-15 minutes per block.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            What if we're a small company without all these roles?
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              The audit adapts to your structure. If one person wears multiple hats, they can complete multiple blocks. 
+              Some questions include "Not Relevant" options for functions that don't exist yet. The diagnostic is still 
+              valuable — it helps identify what governance you need as you scale.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            How long does the full audit take?
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              From initiation to report: typically 3-5 business days. Each respondent spends 10-15 minutes per block. 
+              Once all responses are in, scoring and report generation happen within 24 hours. Level 2 and 3 include 
+              additional consultation time.
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            Is our data secure?
+            <i data-lucide="chevron-down" style="width: 20px; height: 20px;"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="faq-answer-inner">
+              Yes. We're GDPR-compliant with encrypted data in transit and at rest. Audit data is retained for 90 days 
+              after completion unless you request earlier deletion. We never share individual company data with third 
+              parties. See our Privacy Policy and DPA for full details.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section cta" id="start">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to see what's really happening?</h2>
+        <p class="cta-subtitle">
+          Stop guessing. Get a clear, cross-validated diagnosis of your hiring system in days, not months.
+        </p>
+        <a href="/checkout" class="btn btn-primary">
+          Start Your Audit Now
+          <i data-lucide="arrow-right" style="width: 20px; height: 20px;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="#" class="nav-logo" style="color: white;">
+            <div class="nav-logo-icon">
+              <i data-lucide="activity" style="width: 18px; height: 18px;"></i>
+            </div>
+            HiringAudit
+          </a>
+          <p>
+            Independent diagnostic for hiring execution. 
+            We reveal systemic failures that dashboards hide.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Product</h4>
+          <ul>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#blocks">Framework</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#preview">Sample Report</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="mailto:hello@hiringaudit.com?subject=About">About</a></li>
+            <li><a href="mailto:hello@hiringaudit.com">Contact</a></li>
+            <li><a href="mailto:hello@hiringaudit.com?subject=Careers">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/privacy">Privacy Policy</a></li>
+            <li><a href="/terms">Terms of Service</a></li>
+            <li><a href="/cookies">Cookie Policy</a></li>
+            <li><a href="/dpa">DPA</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 HiringAudit. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+          <a href="/cookies">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Lucide icons
+    lucide.createIcons();
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const isActive = item.classList.contains('active');
+        
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+        
+        // Open clicked (if wasn't active)
+        if (!isActive) {
+          item.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Navbar background on scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('.nav');
+      if (window.scrollY > 50) {
+        nav.style.background = 'rgba(250, 251, 252, 0.98)';
+      } else {
+        nav.style.background = 'rgba(250, 251, 252, 0.9)';
+      }
+    });
+
+    // Preview Modal Functions
+    const previewContent = {
+      'l1-summary': {
+        title: 'Executive Risk Summary',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Overall Status</div>
+            <div class="preview-block">
+              <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                <div style="width: 60px; height: 60px; background: #F59E0B; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700;">YELLOW</div>
+                <div>
+                  <div class="preview-redacted-text" style="width: 180px;"></div>
+                  <div class="preview-redacted-text" style="width: 120px; height: 8px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">Key Findings</div>
+            <div class="preview-block">
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div class="preview-redacted-text" style="width: 75%;"></div>
+              <div class="preview-redacted-text" style="width: 85%;"></div>
+              <div class="preview-redacted-text" style="width: 60%;"></div>
+            </div>
+          </div>
+        `
+      },
+      'l1-heatmap': {
+        title: 'Risk Heatmap — Blocks Overview',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">7-Block Status Overview</div>
+            <div class="preview-block">
+              <div class="preview-heatmap-large">
+                <div class="preview-heatmap-cell" style="background: #10B981;">B1</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B2</div>
+                <div class="preview-heatmap-cell" style="background: #EF4444;">B3</div>
+                <div class="preview-heatmap-cell" style="background: #10B981;">B4</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B5</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B6</div>
+                <div class="preview-heatmap-cell" style="background: #10B981;">B7</div>
+              </div>
+              <div class="preview-redacted-text" style="width: 70%;"></div>
+              <div class="preview-redacted-text" style="width: 50%;"></div>
+            </div>
+          </div>
+        `
+      },
+      'l1-insight': {
+        title: 'Example Insight',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Detected Pattern</div>
+            <div class="preview-block">
+              <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 12px;">
+                <span style="background: #FEE2E2; color: #991B1B; padding: 4px 12px; border-radius: 9999px; font-size: 12px; font-weight: 600;">CONTRADICTION</span>
+              </div>
+              <div class="preview-redacted-text" style="width: 95%;"></div>
+              <div class="preview-redacted-text" style="width: 80%;"></div>
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div class="preview-redacted-text" style="width: 65%;"></div>
+            </div>
+          </div>
+        `
+      },
+      'l1-full': {
+        title: 'Level 1 Report Preview',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Includes</div>
+            <ul style="color: #475569; font-size: 14px; line-height: 1.8; padding-left: 20px;">
+              <li>Executive Risk Summary with overall status</li>
+              <li>7-Block Risk Heatmap</li>
+              <li>Gate failure identification</li>
+              <li>Cross-validation contradiction analysis</li>
+              <li>Confidence score breakdown</li>
+              <li>Blind spot analysis</li>
+            </ul>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">Sample Page</div>
+            <div class="preview-block" style="min-height: 200px;">
+              <div class="preview-redacted-text" style="width: 60%; height: 16px;"></div>
+              <div style="height: 16px;"></div>
+              <div class="preview-redacted-text" style="width: 95%;"></div>
+              <div class="preview-redacted-text" style="width: 85%;"></div>
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div style="height: 16px;"></div>
+              <div class="preview-heatmap-large" style="max-width: 300px;">
+                <div class="preview-heatmap-cell" style="background: #10B981;">B1</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B2</div>
+                <div class="preview-heatmap-cell" style="background: #EF4444;">B3</div>
+                <div class="preview-heatmap-cell" style="background: #10B981;">B4</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B5</div>
+                <div class="preview-heatmap-cell" style="background: #F59E0B;">B6</div>
+                <div class="preview-heatmap-cell" style="background: #10B981;">B7</div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'l2-summary': {
+        title: 'Risk Summary',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Executive Overview</div>
+            <div class="preview-block">
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div class="preview-redacted-text" style="width: 75%;"></div>
+              <div class="preview-redacted-text" style="width: 85%;"></div>
+            </div>
+          </div>
+        `
+      },
+      'l2-reco': {
+        title: 'Recommendation Block Example',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Structured Recommendation</div>
+            <div class="preview-block">
+              <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <span style="background: #D1FAE5; color: #065F46; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 600;">QUICK WIN</span>
+                <span style="background: #E0E7FF; color: #3730A3; padding: 4px 12px; border-radius: 9999px; font-size: 11px; font-weight: 600;">WEEK 1-2</span>
+              </div>
+              <div class="preview-redacted-text" style="width: 70%; height: 14px;"></div>
+              <div style="height: 8px;"></div>
+              <div class="preview-redacted-text" style="width: 95%;"></div>
+              <div class="preview-redacted-text" style="width: 80%;"></div>
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div style="height: 12px;"></div>
+              <div style="font-size: 11px; color: #64748B; text-transform: uppercase;">Owner: <span style="background: #E2E8F0; padding: 2px 8px; border-radius: 4px;">████████</span></div>
+            </div>
+          </div>
+        `
+      },
+      'l2-priority': {
+        title: 'Priority Actions',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Prioritized Fix List</div>
+            <div class="preview-block">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: rgba(239,68,68,0.1); border-radius: 8px;">
+                <div style="width: 8px; height: 40px; background: #EF4444; border-radius: 4px;"></div>
+                <div style="flex: 1;">
+                  <div class="preview-redacted-text" style="width: 80%; margin-bottom: 4px;"></div>
+                  <div class="preview-redacted-text" style="width: 50%; height: 8px;"></div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding: 12px; background: rgba(245,158,11,0.1); border-radius: 8px;">
+                <div style="width: 8px; height: 40px; background: #F59E0B; border-radius: 4px;"></div>
+                <div style="flex: 1;">
+                  <div class="preview-redacted-text" style="width: 70%; margin-bottom: 4px;"></div>
+                  <div class="preview-redacted-text" style="width: 45%; height: 8px;"></div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px; padding: 12px; background: rgba(16,185,129,0.1); border-radius: 8px;">
+                <div style="width: 8px; height: 40px; background: #10B981; border-radius: 4px;"></div>
+                <div style="flex: 1;">
+                  <div class="preview-redacted-text" style="width: 60%; margin-bottom: 4px;"></div>
+                  <div class="preview-redacted-text" style="width: 40%; height: 8px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'l2-full': {
+        title: 'Level 2 Report Preview',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Includes Everything in Level 1, Plus</div>
+            <ul style="color: #475569; font-size: 14px; line-height: 1.8; padding-left: 20px;">
+              <li>Prioritized quick wins (Week 1-2 actions)</li>
+              <li>Structural change recommendations</li>
+              <li>Root cause analysis per block</li>
+              <li>Owner assignment suggestions</li>
+              <li>Implementation complexity ratings</li>
+              <li>30-minute walkthrough call</li>
+            </ul>
+          </div>
+        `
+      },
+      'l3-summary': {
+        title: 'Comprehensive Risk Summary',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Full Diagnostic Overview</div>
+            <div class="preview-block">
+              <div class="preview-redacted-text" style="width: 95%;"></div>
+              <div class="preview-redacted-text" style="width: 80%;"></div>
+              <div class="preview-redacted-text" style="width: 90%;"></div>
+              <div class="preview-redacted-text" style="width: 70%;"></div>
+            </div>
+          </div>
+        `
+      },
+      'l3-roadmap': {
+        title: '90-Day Roadmap Snapshot',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Implementation Timeline</div>
+            <div class="preview-block">
+              <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                <div style="flex: 1; background: linear-gradient(90deg, #0891B2, #22D3EE); border-radius: 8px; padding: 16px; color: white;">
+                  <div style="font-size: 11px; opacity: 0.8; margin-bottom: 4px;">PHASE 1</div>
+                  <div style="font-weight: 600; font-size: 14px;">Days 1-30</div>
+                  <div style="height: 8px;"></div>
+                  <div style="background: rgba(255,255,255,0.3); height: 8px; border-radius: 4px; width: 80%;"></div>
+                </div>
+                <div style="flex: 1; background: #E2E8F0; border-radius: 8px; padding: 16px;">
+                  <div style="font-size: 11px; color: #64748B; margin-bottom: 4px;">PHASE 2</div>
+                  <div style="font-weight: 600; font-size: 14px; color: #334155;">Days 31-60</div>
+                  <div style="height: 8px;"></div>
+                  <div style="background: #CBD5E1; height: 8px; border-radius: 4px; width: 60%;"></div>
+                </div>
+                <div style="flex: 1; background: #E2E8F0; border-radius: 8px; padding: 16px;">
+                  <div style="font-size: 11px; color: #64748B; margin-bottom: 4px;">PHASE 3</div>
+                  <div style="font-weight: 600; font-size: 14px; color: #334155;">Days 61-90</div>
+                  <div style="height: 8px;"></div>
+                  <div style="background: #CBD5E1; height: 8px; border-radius: 4px; width: 40%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'l3-engage': {
+        title: 'Engagement Model',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Advisory Support Structure</div>
+            <div class="preview-block">
+              <div class="preview-redacted-text" style="width: 70%;"></div>
+              <div class="preview-redacted-text" style="width: 85%;"></div>
+              <div class="preview-redacted-text" style="width: 60%;"></div>
+              <div style="height: 16px;"></div>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div style="background: #F1F5F9; padding: 12px; border-radius: 8px;">
+                  <div style="font-size: 11px; color: #64748B; margin-bottom: 4px;">WEEKLY</div>
+                  <div class="preview-redacted-text" style="width: 80%;"></div>
+                </div>
+                <div style="background: #F1F5F9; padding: 12px; border-radius: 8px;">
+                  <div style="font-size: 11px; color: #64748B; margin-bottom: 4px;">ON-DEMAND</div>
+                  <div class="preview-redacted-text" style="width: 70%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      'l3-full': {
+        title: 'Level 3 Full Package',
+        content: `
+          <div class="preview-section">
+            <div class="preview-section-title">Includes Everything in Level 2, Plus</div>
+            <ul style="color: #475569; font-size: 14px; line-height: 1.8; padding-left: 20px;">
+              <li>90-day implementation roadmap</li>
+              <li>Weekly advisory calls</li>
+              <li>Process design support</li>
+              <li>Executive stakeholder alignment</li>
+              <li>Change management guidance</li>
+              <li>Custom engagement scope</li>
+            </ul>
+          </div>
+          <div class="preview-section">
+            <div class="preview-section-title">Engagement Structure</div>
+            <div class="preview-block">
+              <div class="preview-redacted-text" style="width: 80%;"></div>
+              <div class="preview-redacted-text" style="width: 65%;"></div>
+              <div class="preview-redacted-text" style="width: 75%;"></div>
+            </div>
+          </div>
+        `
+      }
+    };
+
+    function openPreview(id) {
+      const modal = document.getElementById('previewModal');
+      const title = document.getElementById('previewTitle');
+      const body = document.getElementById('previewBody');
+      
+      if (previewContent[id]) {
+        title.textContent = previewContent[id].title;
+        body.innerHTML = previewContent[id].content;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closePreview() {
+      const modal = document.getElementById('previewModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on overlay click
+    document.getElementById('previewModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closePreview();
+      }
+    });
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closePreview();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — HiringAudit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --color-primary-900: #0F172A;
+      --color-primary-700: #334155;
+      --color-accent-500: #0891B2;
+      --color-accent-600: #0E7490;
+      --color-bg-primary: #FAFBFC;
+      --color-bg-secondary: #F1F5F9;
+      --color-border-light: #E2E8F0;
+      --color-text-primary: #0F172A;
+      --color-text-secondary: #475569;
+    }
+    
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--color-text-primary);
+      background: var(--color-bg-primary);
+    }
+    
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(250, 251, 252, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--color-border-light);
+      padding: 16px 0;
+    }
+    
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--color-primary-900);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .nav-logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--color-accent-500), #22D3EE);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+    }
+    
+    .nav-back {
+      color: var(--color-accent-500);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    
+    .nav-back:hover {
+      color: var(--color-accent-600);
+    }
+    
+    /* Content */
+    .content {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 120px 24px 80px;
+    }
+    
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--color-primary-900);
+    }
+    
+    .page-meta {
+      color: var(--color-text-secondary);
+      font-size: 14px;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 48px;
+      margin-bottom: 16px;
+      color: var(--color-primary-900);
+    }
+    
+    h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-top: 32px;
+      margin-bottom: 12px;
+      color: var(--color-primary-700);
+    }
+    
+    p {
+      margin-bottom: 16px;
+      color: var(--color-text-secondary);
+    }
+    
+    ul, ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+      color: var(--color-text-secondary);
+    }
+    
+    li {
+      margin-bottom: 8px;
+    }
+    
+    a {
+      color: var(--color-accent-500);
+    }
+    
+    a:hover {
+      color: var(--color-accent-600);
+    }
+    
+    .highlight-box {
+      background: var(--color-bg-secondary);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 24px 0;
+      font-size: 14px;
+    }
+    
+    th, td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border-light);
+    }
+    
+    th {
+      background: var(--color-bg-secondary);
+      font-weight: 600;
+      color: var(--color-primary-900);
+    }
+    
+    td {
+      color: var(--color-text-secondary);
+    }
+    
+    /* Footer */
+    .footer {
+      background: var(--color-primary-900);
+      color: #64748B;
+      padding: 48px 24px;
+      text-align: center;
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: #64748B;
+      margin: 0 16px;
+    }
+    
+    .footer a:hover {
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <div class="nav-logo-icon">HA</div>
+        HiringAudit
+      </a>
+      <a href="/" class="nav-back">← Back to Home</a>
+    </div>
+  </nav>
+
+  <main class="content">
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-meta">Last updated: February 2025</p>
+
+    <h2>1. Introduction</h2>
+    <p>HiringAudit ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our hiring audit diagnostic service.</p>
+
+    <h2>2. Data Controller</h2>
+    <div class="highlight-box">
+      <p><strong>Company:</strong> HiringAudit<br>
+      <strong>Email:</strong> privacy@hiringaudit.com<br>
+      <strong>Data Protection:</strong> GDPR Compliant</p>
+    </div>
+
+    <h2>3. Information We Collect</h2>
+    
+    <h3>3.1 Client Information</h3>
+    <ul>
+      <li>Company name and details</li>
+      <li>Billing information</li>
+      <li>Contact information (name, email, phone)</li>
+    </ul>
+
+    <h3>3.2 Audit Respondent Information</h3>
+    <ul>
+      <li>Email address</li>
+      <li>Job title/role</li>
+      <li>Questionnaire responses</li>
+    </ul>
+
+    <h3>3.3 Automatically Collected Information</h3>
+    <ul>
+      <li>IP address</li>
+      <li>Browser type and version</li>
+      <li>Device information</li>
+      <li>Cookies and usage data</li>
+    </ul>
+
+    <h2>4. Legal Basis for Processing</h2>
+    <p>Under GDPR Article 6, we process your data based on:</p>
+    <ul>
+      <li><strong>Contract Performance:</strong> To deliver the audit service you purchased</li>
+      <li><strong>Legitimate Interests:</strong> To improve our services and communicate with you</li>
+      <li><strong>Consent:</strong> For marketing communications and non-essential cookies</li>
+      <li><strong>Legal Obligation:</strong> To comply with applicable laws</li>
+    </ul>
+
+    <h2>5. How We Use Your Information</h2>
+    <ul>
+      <li>Deliver and improve our audit services</li>
+      <li>Process payments</li>
+      <li>Communicate about your audit</li>
+      <li>Send service updates</li>
+      <li>Comply with legal obligations</li>
+    </ul>
+
+    <h2>6. Data Sharing</h2>
+    <p>We share data only with:</p>
+    <ul>
+      <li><strong>Client organizations:</strong> Audit results are shared with the purchasing company</li>
+      <li><strong>Service providers:</strong> Cloud hosting, payment processing (Stripe), email delivery</li>
+      <li><strong>Legal requirements:</strong> When required by law</li>
+    </ul>
+    <p><strong>We never sell your personal data.</strong></p>
+
+    <h2>7. International Data Transfers</h2>
+    <p>When transferring data outside the EEA, we use:</p>
+    <ul>
+      <li>Standard Contractual Clauses (SCCs)</li>
+      <li>Adequacy decisions</li>
+      <li>Data Privacy Framework certification</li>
+    </ul>
+
+    <h2>8. Data Retention</h2>
+    <table>
+      <tr>
+        <th>Data Type</th>
+        <th>Retention Period</th>
+      </tr>
+      <tr>
+        <td>Audit data</td>
+        <td>90 days after completion</td>
+      </tr>
+      <tr>
+        <td>Client account information</td>
+        <td>Duration of relationship + 7 years</td>
+      </tr>
+      <tr>
+        <td>Payment records</td>
+        <td>7 years (legal requirement)</td>
+      </tr>
+      <tr>
+        <td>Marketing preferences</td>
+        <td>Until consent withdrawn</td>
+      </tr>
+    </table>
+
+    <h2>9. Your Rights</h2>
+    <p>Under GDPR, you have the right to:</p>
+    <ul>
+      <li><strong>Access:</strong> Request a copy of your data</li>
+      <li><strong>Rectification:</strong> Correct inaccurate data</li>
+      <li><strong>Erasure:</strong> Request deletion of your data</li>
+      <li><strong>Restriction:</strong> Limit how we process your data</li>
+      <li><strong>Portability:</strong> Receive your data in a portable format</li>
+      <li><strong>Object:</strong> Object to certain processing</li>
+      <li><strong>Withdraw Consent:</strong> Withdraw previously given consent</li>
+    </ul>
+    <p>To exercise these rights, contact us at <a href="mailto:privacy@hiringaudit.com">privacy@hiringaudit.com</a>. We respond within 30 days.</p>
+
+    <h2>10. Security Measures</h2>
+    <ul>
+      <li>TLS encryption for data in transit</li>
+      <li>AES-256 encryption for data at rest</li>
+      <li>Access controls and authentication</li>
+      <li>Regular security monitoring</li>
+      <li>Incident response procedures</li>
+    </ul>
+
+    <h2>11. Cookies</h2>
+    <p>We use cookies for essential functionality and analytics. See our <a href="/cookies">Cookie Policy</a> for details.</p>
+
+    <h2>12. Children's Privacy</h2>
+    <p>Our service is not intended for individuals under 18 years of age.</p>
+
+    <h2>13. Changes to This Policy</h2>
+    <p>We may update this policy periodically. We will notify you of significant changes via email or website notice.</p>
+
+    <h2>14. Contact Us</h2>
+    <p>For privacy-related questions:</p>
+    <div class="highlight-box">
+      <p><strong>Email:</strong> <a href="mailto:privacy@hiringaudit.com">privacy@hiringaudit.com</a></p>
+      <p>You also have the right to lodge a complaint with your local data protection supervisory authority.</p>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 HiringAudit. All rights reserved.</p>
+    <p style="margin-top: 16px;">
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="/cookies">Cookies</a>
+      <a href="/dpa">DPA</a>
+    </p>
+  </footer>
+</body>
+</html>
